@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="<%= typeof language !== 'undefined' ? language : 'es' %>" class="h-full">
+<head>
+    <meta charset="UTF-8" />
+    <title>Verificar 2FA por Email</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="icon" type="image/svg+xml" href="/public/favicon.svg">
+
+    <link href="/public/styles.css" rel="stylesheet" />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="min-h-full font-poppins edit-profile-page"> 
+    
+    <div class="absolute inset-0 z-0 min-h-screen">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-pink-500/30 to-blue-600/20 bg-mesh opacity-80"></div>
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="absolute inset-0">
+            <div class="floating-particle particle-1"></div>
+            <div class="floating-particle particle-2"></div>
+            <div class="floating-particle particle-3"></div>
+            <div class="floating-particle particle-4"></div>
+        </div>
+    </div>
+
+    <div class="relative z-10 min-h-screen flex items-center justify-center px-6 py-8">
+        <!-- Language Switcher -->
+        <div class="absolute top-6 right-6">
+            <%- include('components/languageSwitcher') %>
+        </div>
+        
+        <div class="w-full max-w-md">
+
+            <div class="glass-container max-w-md mx-auto text-center">
+
+                <div class="mb-8">
+                    <h1 class="text-3xl font-black text-gradient font-orbitron mb-2">
+                        <%= typeof t !== 'undefined' ? t('verifyEmail2fa.verifyCode') : 'Verificar Código' %>
+                    </h1>
+                    <p class="text-white/70 text-base">
+                        <%= typeof t !== 'undefined' ? t('verifyEmail2fa.codeSent') : 'Hemos enviado un código de 6 dígitos a tu correo.' %>
+                    </p>
+                </div>
+
+                <% if (typeof error !== 'undefined' && error) { %>
+                    <div class="error-message">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <%= error %>
+                    </div>
+                <% } %>
+
+                <form action="/verifyEmail2fa" method="POST" class="space-y-6">
+                    <div class="form-group">
+                        <label for="code" class="form-label text-center block">
+                            <%= typeof t !== 'undefined' ? t('verifyEmail2fa.verificationCode') : 'Código de Verificación' %>
+                        </label>
+                        <input
+                            type="text"
+                            id="code"
+                            name="code"
+                            class="form-input text-center text-lg tracking-widest font-mono"
+                            placeholder="<%= typeof t !== 'undefined' ? t('verifyEmail2fa.codePlaceholder') : '••••••' %>"
+                            maxlength="6"
+                            required
+                            autocomplete="off"
+                            autofocus
+                        />
+                    </div>
+                    
+                    <button type="submit" class="btn-primary w-full group">
+                        <span class="relative z-10"><%= typeof t !== 'undefined' ? t('verifyEmail2fa.verifyAndActivate') : 'Verificar y Activar' %></span>
+                    </button>
+                    
+                    <div class="text-center pt-2">
+                        <p class="text-white/60 text-sm">
+                            <a href="/setupEmail2fa" class="text-purple-400 hover:text-purple-300 transition-colors font-medium">
+                                <%= typeof t !== 'undefined' ? t('verifyEmail2fa.notReceived') : '¿No recibiste el código? Reenviar.' %>
+                            </a>
+                        </p>
+                    </div>
+
+                    <div class="text-center pt-2">
+                        <a href="/editprofile" class="text-white/60 hover:text-white transition-colors text-sm">
+                            <%= typeof t !== 'undefined' ? t('verifyEmail2fa.cancelAndReturn') : 'Cancelar y volver al perfil' %>
+                        </a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="/public/js/landing.js"></script>
+</body>
+</html>

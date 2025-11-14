@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="<%= typeof language !== 'undefined' ? language : 'es' %>" class="h-full">
+<head>
+    <meta charset="UTF-8" />
+    <title>Login - ft_transcendence</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- Google Sign-In -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- FAVICON -->
+    <link rel="icon" type="image/svg+xml" href="./public/favicon.svg">
+    
+    <!-- CSS compilado por Tailwind -->
+    <link href="/public/styles.css" rel="stylesheet" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="h-full overflow-hidden font-poppins">
+    <!-- Fondo con gradiente y mesh (mismo que index) -->
+    <div class="fixed inset-0 z-0">
+        <!-- Gradiente base -->
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"></div>
+        
+        <!-- Gradiente vibrante -->
+        <div class="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-pink-500/30 to-blue-600/20 bg-mesh opacity-80"></div>
+        
+        <!-- Overlay oscuro para mejor contraste -->
+        <div class="absolute inset-0 bg-black/20"></div>
+        
+        <!-- Partículas flotantes -->
+        <div class="absolute inset-0">
+            <div class="floating-particle particle-1"></div>
+            <div class="floating-particle particle-2"></div>
+            <div class="floating-particle particle-3"></div>
+            <div class="floating-particle particle-4"></div>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="relative z-10 h-full flex flex-col">
+
+        <!-- Language Switcher -->
+        <div class="absolute top-6 right-6">
+            <%- include('components/languageSwitcher') %>
+        </div>
+
+        <!-- Contenido principal centrado -->
+        <main class="flex-1 flex items-center justify-center px-6 py-12">
+            <div class="w-full max-w-md">
+                <!-- Container con efecto glass -->
+                <div class="login-container glass-effect">
+                    <!-- Header del login -->
+                    <div class="text-center mb-8">
+                        <h1 class="text-3xl font-bold text-gradient font-orbitron mb-2">
+                            <%= typeof t !== 'undefined' ? t('login.welcome') : 'Bienvenido' %>
+                        </h1>
+                        <p class="text-white/70 text-sm">
+                            <%= typeof t !== 'undefined' ? t('login.continueAdventure') : 'Inicia sesión para continuar la aventura' %>
+                        </p>
+                    </div>
+
+                    <!-- Formulario de login local -->
+                    <form method="POST" action="/login" class="space-y-6">
+                        <!-- Campo Email -->
+                        <div class="form-group">
+                            <label for="mail" class="form-label">
+                                <%= typeof t !== 'undefined' ? t('login.email') : 'Email' %>
+                            </label>
+                            <input 
+                                type="email" 
+                                name="mail" 
+                                id="mail" 
+                                required 
+                                class="form-input"
+                                placeholder="<%= typeof t !== 'undefined' ? t('login.emailPlaceholder') : 'tu@email.com' %>"
+                            />
+                        </div>
+
+                        <!-- Campo Password -->
+                        <div class="form-group">
+                            <label for="password" class="form-label">
+                                <%= typeof t !== 'undefined' ? t('login.password') : 'Password' %>
+                            </label>
+                            <input 
+                                type="password" 
+                                name="password" 
+                                id="password" 
+                                required 
+                                class="form-input"
+                                placeholder="<%= typeof t !== 'undefined' ? t('login.passwordPlaceholder') : '••••••••' %>"
+                            />
+                        </div>
+
+                        <!-- Botón Login -->
+                        <button type="submit" class="btn-primary w-full group">
+                            <span class="relative z-10"><%= typeof t !== 'undefined' ? t('login.loginButton') : 'Iniciar Sesión' %></span>
+                        </button>
+                    </form>
+
+                    <!-- Separador -->
+                    <div class="separator">
+                        <div class="separator-line"></div>
+                        <span class="separator-text"><%= typeof t !== 'undefined' ? t('login.orContinueWith') : 'o continúa con' %></span>
+                        <div class="separator-line"></div>
+                    </div>
+
+                    <!-- Google Sign-In -->
+                    <div class="google-signin-container">
+                        <div
+                            id="g_id_onload"
+                            data-client_id="<%= googleClientId %>"
+                            data-callback="handleGoogleLogin"
+                            data-auto_prompt="false"
+                        ></div>
+                        <div
+                            class="g_id_signin google-btn-wrapper"
+                            data-type="standard"
+                            data-size="large"
+                            data-theme="filled_blue"
+                            data-text="signin_with"
+                            data-shape="rectangular"
+                            data-logo_alignment="left"
+                            data-width="100%"
+                        ></div>
+                    </div>
+
+                    <!-- Links adicionales -->
+                    <div class="text-center mt-6 space-y-2">
+                        <p class="text-white/60 text-sm">
+                            <%= typeof t !== 'undefined' ? t('login.noAccount') : '¿No tienes cuenta?' %> 
+                            <a href="/signup" class="text-orange-400 hover:text-orange-300 transition-colors font-medium">
+                                <%= typeof t !== 'undefined' ? t('login.registerHere') : 'Regístrate aquí' %>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <!-- JavaScript para Google Login (conservado tal como estaba) -->
+    <script>
+        async function handleGoogleLogin(response) {
+            const token = response.credential;
+            try {
+                const res = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ googleToken: token }),
+                });
+                if (res.redirected) {
+                    window.location.href = res.url;
+                } else {
+                    alert('Google login failed');
+                }
+            } catch (err) {
+                alert('An error occurred during Google login');
+                console.error(err);
+            }
+        }
+    </script>
+
+    <!-- JavaScript para efectos interactivos -->
+    <script src="/public/js/landing.js"></script>
+</body>
+</html>

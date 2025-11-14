@@ -1,0 +1,52 @@
+--This file inserts into game. Two users with ids 1 and 2 should be created
+-- In order for this file to work
+-- -- Game 1: User 1 (id_user2) wins
+-- INSERT INTO game (
+    --     id_user1,
+    --     id_user2,
+    --     points_user1,
+    --     points_user2,
+    --     winner,
+    --     finished
+    -- ) VALUES (
+    --     2,      -- id_user1
+    --     1,      -- id_user2
+    --     3,
+    --     7,
+    --     1,      -- winner is user 1
+    --     TRUE
+    -- );
+--
+-- -- Game 2: User 2 (id_user1) wins
+-- INSERT INTO game (
+    --     id_user1,
+    --     id_user2,
+    --     points_user1,
+    --     points_user2,
+    --     winner,
+    --     finished
+    -- ) VALUES (
+    --     2,
+    --     1,
+    --     7,
+    --     2,
+    --     2,      -- winner is user 2
+    --     TRUE
+    -- );
+--
+-- -- Game 3: Ongoing game (user 1 is id_user1)
+-- INSERT INTO game (
+    --     id_user1,
+    --     id_user2,
+    --     points_user1,
+    --     points_user2,
+    --     winner,
+    --     finished
+    -- ) VALUES (
+    --     1,
+    --     2,
+    --     5,
+    --     6,
+    --     NULL,
+    --     FALSE
+    -- );

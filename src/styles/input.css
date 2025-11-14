@@ -1,0 +1,2469 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================================================ */
+/* ANIMACIONES GLOBALES UNIFICADAS */
+/* ================================================ */
+
+@keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); }
+    100% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.8); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+@keyframes subtle-pulse {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
+    }
+}
+
+/* ================================================ */
+/* ESTILOS GLOBALES COMPARTIDOS */
+/* ================================================ */
+
+/* Efectos de fondo */
+.bg-mesh {
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 75% 25%, rgba(236, 72, 153, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 25% 75%, rgba(59, 130, 246, 0.3) 0%, transparent 50%);
+}
+
+/* Texto con gradiente animado - CONSISTENTE */
+.text-gradient {
+    background: linear-gradient(135deg, #a855f7 0%, #ec4899 25%, #f59e0b 50%, #10b981 75%, #3b82f6 100%);
+    background-size: 300% 300%;
+    animation: gradient-shift 8s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Efectos glass compartidos */
+.glass-effect {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Bordes neon */
+.neon-border {
+    box-shadow: 
+        0 0 20px rgba(168, 85, 247, 0.3),
+        inset 0 0 20px rgba(168, 85, 247, 0.1);
+}
+
+/* Partículas flotantes */
+.floating-particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+    opacity: 0.6;
+}
+
+.particle-1 {
+    top: 25%;
+    left: 25%;
+    width: 8px;
+    height: 8px;
+    background: #a855f7;
+}
+
+.particle-2 {
+    top: 75%;
+    right: 25%;
+    width: 4px;
+    height: 4px;
+    background: #ec4899;
+    animation-delay: 2s;
+    opacity: 0.4;
+}
+
+.particle-3 {
+    top: 50%;
+    left: 75%;
+    width: 12px;
+    height: 12px;
+    background: #3b82f6;
+    animation-delay: 4s;
+    opacity: 0.3;
+}
+
+.particle-4 {
+    top: 33%;
+    right: 33%;
+    width: 6px;
+    height: 6px;
+    background: #f59e0b;
+    animation-delay: 6s;
+    opacity: 0.5;
+}
+
+/* ================================================ */
+/* COMPONENTES BASE UNIFICADOS */
+/* ================================================ */
+
+/* Contenedor glass unificado para todas las páginas */
+.glass-container {
+    @apply p-8 rounded-3xl backdrop-blur-lg border border-white/20 w-full;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(168, 85, 247, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: fadeInUp 0.6s ease-out;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.glass-container::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, transparent, rgba(168, 85, 247, 0.2), transparent);
+    border-radius: 1.5rem;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Hover solo en dispositivos con hover */
+@media (hover: hover) {
+    .glass-container:hover::before {
+        opacity: 1;
+    }
+    
+    .glass-container:hover {
+        box-shadow: 
+            0 12px 40px rgba(0, 0, 0, 0.4),
+            0 0 40px rgba(168, 85, 247, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+}
+
+/* Botones unificados */
+.btn-primary {
+    @apply relative px-8 py-4 text-white font-semibold rounded-xl shadow-lg transition-all duration-300;
+    background: linear-gradient(to right, #f97316, #ea580c);
+    animation: glow 2s ease-in-out infinite alternate;
+    transform: translateY(0);
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, #ea580c, #dc2626);
+    border-radius: 0.75rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 25px 50px -12px rgba(249, 115, 22, 0.25);
+}
+
+.btn-primary:hover::before {
+    opacity: 1;
+}
+
+.btn-secondary {
+    @apply relative px-8 py-4 text-white font-semibold rounded-xl transition-all duration-300 glass-effect neon-border;
+    transform: translateY(0);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-4px);
+}
+
+/* Links de navegación */
+.nav-link {
+    @apply text-white/80 hover:text-white transition-colors;
+}
+
+/* Efecto ripple */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(0);
+    animation: ripple-animation 0.6s linear;
+    pointer-events: none;
+}
+
+/* ================================================ */
+/* ESTILOS ESPECÍFICOS PARA INDEX */
+/* ================================================ */
+
+.game-badge {
+    @apply inline-block px-4 py-2 rounded-full text-orange-300 text-sm font-medium glass-effect neon-border;
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.main-title {
+    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-8 leading-tight;
+}
+
+.hero-description {
+    @apply text-white/70 text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed;
+}
+
+.action-buttons {
+    @apply flex flex-col sm:flex-row gap-4 justify-center items-center;
+}
+
+.stats-card {
+    @apply text-center rounded-xl p-6 glass-effect neon-border;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1);
+}
+
+.stats-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.03);
+    box-shadow: 
+        0 0 25px rgba(168, 85, 247, 0.4),
+        inset 0 0 20px rgba(168, 85, 247, 0.15);
+}
+
+/* ================================================ */
+/* ESTILOS PARA FORMULARIOS (LOGIN/SIGNUP) */
+/* ================================================ */
+
+/* Usar clase base unificada */
+.auth-container {
+    @apply glass-container max-w-md mx-auto;
+}
+
+/* Alias para compatibilidad */
+.login-container,
+.signup-container {
+    @apply glass-container max-w-md mx-auto;
+}
+
+.form-group {
+    @apply space-y-3 mb-6;
+}
+
+.form-label {
+    @apply block text-sm font-medium text-white/90 mb-2 ml-1;
+}
+
+.form-input {
+    @apply w-full px-5 py-4 rounded-xl border border-white/20 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/30;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-size: 16px; /* Evita zoom en móviles iOS */
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.form-input:focus {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+}
+
+.form-input:hover {
+    border-color: rgba(168, 85, 247, 0.4);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.form-input:focus-visible {
+    outline: 2px solid rgba(168, 85, 247, 0.8);
+    outline-offset: 2px;
+}
+
+.form-input:valid {
+    border-color: rgba(34, 197, 94, 0.6);
+}
+
+.form-input:invalid:not(:placeholder-shown) {
+    border-color: rgba(239, 68, 68, 0.6);
+}
+
+/* Separador para OAuth */
+.separator {
+    @apply flex items-center justify-center my-8 px-4;
+}
+
+.separator-line {
+    @apply flex-1 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent;
+    min-width: 40px;
+}
+
+.separator-text {
+    @apply px-6 text-sm text-white/60 font-medium text-center whitespace-nowrap;
+    flex-shrink: 0;
+}
+
+/* Google Sign-In */
+.google-signin-container {
+    @apply w-full flex justify-center;
+}
+
+.google-btn-wrapper {
+    @apply w-full;
+}
+
+.google-signin-container .g_id_signin {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.google-signin-container .g_id_signin > div {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Espaciado entre elementos */
+.auth-container > * + *,
+.login-container > * + *,
+.signup-container > * + * {
+    margin-top: 1.5rem;
+}
+
+/* ================================================ */
+/* ESTILOS PARA HOME */
+/* ================================================ */
+
+/* Fondo completo para HOME - igual que otras páginas */
+body.home-page {
+    background: linear-gradient(to bottom right, 
+        rgb(15 23 42) 0%, 
+        rgb(88 28 135) 50%, 
+        rgb(15 23 42) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+body.home-page::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 75% 25%, rgba(236, 72, 153, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 25% 75%, rgba(59, 130, 246, 0.3) 0%, transparent 50%);
+    background-size: 400% 400%;
+    opacity: 0.8;
+    z-index: -2;
+    pointer-events: none;
+}
+
+body.home-page::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: -1;
+    pointer-events: none;
+}
+
+body.home-page .absolute.inset-0.z-0 {
+    display: none !important;
+}
+
+.home-container {
+    @apply glass-container max-w-6xl mx-auto;
+}
+
+.welcome-title {
+    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight;
+}
+
+/* Cards de acciones principales */
+.action-card {
+    @apply block p-6 rounded-2xl backdrop-blur-lg border border-white/20 transition-all duration-300 text-center;
+    background: rgba(255, 255, 255, 0.05);
+    transform: scale(1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.action-card:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(168, 85, 247, 0.4);
+}
+
+.action-card-icon {
+    @apply w-16 h-16 rounded-2xl flex items-center justify-center text-white mx-auto mb-4;
+    transition: transform 0.2s ease-out;
+}
+
+.action-card:hover .action-card-icon {
+    transform: scale(1.1);
+}
+
+/* Items del menú de navegación */
+.nav-menu-item {
+    @apply flex items-center space-x-2 px-4 py-2 rounded-xl text-white/80 hover:text-white transition-all duration-300;
+    transform: scale(1);
+}
+
+.nav-menu-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.02);
+}
+
+.nav-menu-item.active {
+    @apply text-white bg-white/20 border border-white/30;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+    animation: subtle-pulse 4s ease-in-out infinite;
+}
+
+/* Botón de logout */
+.logout-btn {
+    @apply p-2 rounded-lg text-white/80 hover:text-white transition-all duration-300;
+    transform: scale(1);
+}
+
+.logout-btn:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+/* ================================================ */
+/* ESTILOS ESPECÍFICOS PARA PERFIL */
+/* ================================================ */
+
+/* FONDO UNIFICADO PARA PERFIL - CALIBRADO MÁS LENTO */
+body.profile-page {
+    /* ELIMINAR background completamente - usar solo el HTML */
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    min-height: 100vh;
+}
+
+/* FONDO COMPLETO PARA PERFIL - MÉTODO CSS PARA TODAS LAS PANTALLAS */
+body.profile-page {
+    /* Aplicar fondo CSS en todas las pantallas, no solo móvil */
+    background: linear-gradient(to bottom right, 
+        rgb(15 23 42) 0%, 
+        rgb(88 28 135) 50%, 
+        rgb(15 23 42) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+/* Mesh overlay para TODAS las pantallas */
+body.profile-page::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 75% 25%, rgba(236, 72, 153, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 25% 75%, rgba(59, 130, 246, 0.3) 0%, transparent 50%);
+    background-size: 400% 400%;
+    opacity: 0.8;
+    z-index: -2;
+    pointer-events: none;
+}
+
+/* Overlay oscuro para TODAS las pantallas */
+body.profile-page::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Ocultar el fondo HTML para evitar conflictos */
+body.profile-page .absolute.inset-0.z-0 {
+    display: none !important;
+}
+
+body.profile-page::before {
+    /* ELIMINAR - conflicto con HTML */
+    display: none;
+}
+
+body.profile-page::after {
+    /* ELIMINAR - conflicto con HTML */
+    display: none;
+}
+
+/* NO ocultar el fondo original - es el que queremos usar */
+/* body.profile-page .absolute.inset-0.z-0 {
+    display: none !important;
+} */
+
+/* Usar contenedor base para perfil */
+.profile-header-container,
+.match-history-container {
+    @apply glass-container;
+}
+
+.match-history-container {
+    animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+/* Avatar container */
+.profile-avatar-container {
+    @apply relative;
+}
+
+.profile-avatar {
+    @apply w-32 h-32 rounded-full border-4 border-white/20 overflow-hidden relative;
+    background: linear-gradient(135deg, #a855f7, #ec4899, #f59e0b);
+    transition: all 0.3s ease;
+}
+
+.profile-avatar:hover {
+    transform: scale(1.05);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+}
+
+.profile-avatar-img {
+    @apply w-full h-full object-cover;
+}
+
+.profile-avatar-placeholder {
+    @apply w-full h-full flex items-center justify-center;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+}
+
+/* Status indicator */
+.profile-status-indicator {
+    @apply absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-white/20;
+    animation: pulse 2s infinite;
+}
+
+/* Título del perfil */
+.profile-title {
+    @apply text-3xl sm:text-4xl md:text-5xl font-black mb-2;
+}
+
+/* Acciones del perfil */
+.profile-actions {
+    @apply flex flex-col sm:flex-row gap-3;
+}
+
+.profile-action-btn {
+    @apply flex items-center space-x-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300;
+    transform: scale(1);
+}
+
+.profile-action-btn.primary {
+    @apply bg-gradient-to-r from-orange-500 to-orange-600 text-white;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.profile-action-btn.primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(249, 115, 22, 0.4);
+}
+
+.profile-action-btn.secondary {
+    @apply bg-white/10 text-white border border-white/20;
+    backdrop-filter: blur(10px);
+}
+
+.profile-action-btn.secondary:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Stats cards detalladas */
+.stats-card-detailed {
+    @apply p-6 rounded-2xl backdrop-blur-lg border border-white/20;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1);
+}
+
+.stats-card-detailed:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.stats-card-detailed.wins:hover {
+    box-shadow: 0 0 30px rgba(34, 197, 94, 0.3);
+}
+
+.stats-card-detailed.losses:hover {
+    box-shadow: 0 0 30px rgba(239, 68, 68, 0.3);
+}
+
+.stats-card-detailed.ratio:hover {
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+}
+
+.stats-card-detailed.level:hover {
+    box-shadow: 0 0 30px rgba(249, 115, 22, 0.3);
+}
+
+.stats-card-header {
+    @apply flex items-center space-x-3 mb-4;
+}
+
+.stats-card-title {
+    @apply text-white/80 font-medium;
+}
+
+.stats-card-value {
+    @apply text-3xl font-bold font-orbitron;
+}
+
+.match-history-header {
+    @apply mb-6;
+}
+
+/* Grid de partidas */
+.match-history-grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .match-history-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Cards de partidas */
+.match-card {
+    @apply p-4 rounded-xl backdrop-blur-lg border transition-all duration-300;
+    background: rgba(255, 255, 255, 0.05);
+    transform: scale(1);
+}
+
+.match-card:hover {
+    transform: scale(1.02);
+    background: rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+}
+
+.match-card.match-victory {
+    @apply border-green-500/30;
+    background: rgba(34, 197, 94, 0.1);
+}
+
+.match-card.match-victory:hover {
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+}
+
+.match-card.match-loss {
+    @apply border-red-500/30;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.match-card.match-loss:hover {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+.match-card.match-unfinished {
+    @apply border-yellow-500/30;
+    background: rgba(234, 179, 8, 0.1);
+}
+
+.match-card.match-unfinished:hover {
+    box-shadow: 0 0 20px rgba(234, 179, 8, 0.3);
+}
+
+/* Header de la card de partida */
+.match-card-header {
+    @apply flex justify-between items-center mb-4;
+}
+
+.match-status {
+    @apply flex items-center space-x-2 font-medium;
+}
+
+.match-date {
+    @apply text-white/60 text-sm;
+}
+
+/* Jugadores */
+.match-players {
+    @apply flex items-center justify-between;
+}
+
+.player {
+    @apply flex flex-col items-center space-y-1;
+}
+
+.player-name {
+    @apply text-white/90 font-medium text-sm;
+}
+
+.player-score {
+    @apply text-2xl font-bold text-gradient;
+}
+
+.player-self .player-name {
+    @apply text-orange-400 font-semibold;
+}
+
+.match-vs {
+    @apply text-white/60 font-bold text-sm;
+}
+
+/* Estado sin partidas */
+.no-matches {
+    @apply py-12 text-center;
+}
+
+/* ================================================ */
+/* ANIMACIONES ESPECÍFICAS */
+/* ================================================ */
+
+/* Animación staggered para action cards */
+.action-card:nth-child(1),
+.action-card:nth-child(2),
+.action-card:nth-child(3),
+.action-card:nth-child(4) {
+    animation: fadeInUp 0.6s ease-out both;
+}
+
+/* Animación más simple para los stats */
+.stats-card {
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+/* Animación staggered para stats cards */
+.stats-card-detailed:nth-child(1) {
+    animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+
+.stats-card-detailed:nth-child(2) {
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.stats-card-detailed:nth-child(3) {
+    animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+.stats-card-detailed:nth-child(4) {
+    animation: fadeInUp 0.6s ease-out 0.4s both;
+}
+
+/* Animación para las match cards */
+.match-card:nth-child(odd) {
+    animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+
+.match-card:nth-child(even) {
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+/* ================================================ */
+/* RESPONSIVE DESIGN UNIFICADO */
+/* ================================================ */
+
+/* Tablets */
+@media (max-width: 768px) {
+    /* Ajustes generales */
+    main {
+        @apply px-4 py-6;
+    }
+    
+    .glass-container {
+        @apply p-6 rounded-2xl;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        width: calc(100% - 2rem);
+    }
+    
+    /* Títulos */
+    .main-title, .welcome-title {
+        @apply text-3xl;
+    }
+    
+    .profile-title {
+        @apply text-2xl sm:text-3xl;
+    }
+    
+    .hero-description {
+        @apply text-base px-4;
+    }
+    
+    /* Efectos hover menos pronunciados en móviles */
+    .action-card:hover {
+        transform: scale(1.02);
+    }
+    
+    .glass-container:hover {
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.3),
+            0 0 30px rgba(168, 85, 247, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Fondo móvil mejorado */
+    body {
+        overflow-y: auto !important;
+        overflow-x: hidden;
+        min-height: 100vh;
+    }
+    
+    .fixed.inset-0.z-0 {
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        min-height: 100vh;
+        height: auto;
+    }
+    
+    .relative.z-10.h-full {
+        position: relative;
+        min-height: 100vh;
+        height: auto;
+    }
+    
+    .home-container {
+        margin: 2rem auto;
+        min-height: auto;
+    }
+    
+    /* Perfil específico */
+    .profile-avatar {
+        @apply w-24 h-24;
+    }
+    
+    .stats-card-detailed {
+        @apply p-4;
+    }
+    
+    .form-input {
+        @apply py-3 px-4;
+    }
+    
+    .separator-text {
+        @apply px-4 text-xs;
+    }
+}
+
+/* Móviles */
+@media (max-width: 480px) {
+    .glass-container {
+        @apply p-5 mx-3 rounded-xl;
+        max-width: 95%;
+    }
+    
+    .main-title, .welcome-title {
+        @apply text-2xl;
+    }
+    
+    .profile-title {
+        @apply text-xl sm:text-2xl;
+    }
+    
+    .profile-avatar {
+        @apply w-20 h-20;
+    }
+    
+    .form-input {
+        @apply py-3 px-4 text-base;
+        font-size: 16px;
+    }
+    
+    .separator {
+        @apply my-6 px-2;
+    }
+    
+    .separator-text {
+        @apply px-3 text-xs;
+        font-size: 12px;
+    }
+    
+    .form-label {
+        @apply text-sm;
+    }
+    
+    .stats-card-detailed {
+        @apply p-3;
+    }
+    
+    .stats-card-value {
+        @apply text-2xl;
+    }
+    
+    .match-card {
+        @apply p-3;
+    }
+    
+    /* Efectos hover muy sutiles en móviles pequeños */
+    .action-card:hover {
+        transform: scale(1.01);
+    }
+    
+    .stats-card:hover, .stats-card-detailed:hover {
+        transform: scale(1.01);
+    }
+    
+    .nav-menu-item:hover {
+        transform: scale(1);
+    }
+    
+    .home-container {
+        margin: 1rem auto;
+    }
+}
+
+/* Móviles muy pequeños */
+@media (max-width: 320px) {
+    .glass-container {
+        @apply p-4 mx-2;
+    }
+    
+    .profile-avatar {
+        @apply w-16 h-16;
+    }
+    
+    .profile-title {
+        @apply text-lg;
+    }
+    
+    .profile-action-btn {
+        @apply px-4 py-2 text-sm;
+    }
+    
+    .stats-card-detailed {
+        @apply p-2;
+    }
+    
+    .stats-card-value {
+        @apply text-xl;
+    }
+    
+    .separator-text {
+        @apply px-2;
+        font-size: 11px;
+    }
+}
+
+/* ================================================ */
+/* MEJORAS UX Y ACCESIBILIDAD */
+/* ================================================ */
+
+/* Focus states mejorados */
+.nav-menu-item:focus,
+.action-card:focus,
+.logout-btn:focus,
+.profile-action-btn:focus {
+    outline: 2px solid rgba(168, 85, 247, 0.8);
+    outline-offset: 2px;
+    transform: scale(1.02);
+}
+
+/* Transición del menú móvil */
+#mobileMenu {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Evitar animaciones para usuarios que prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .text-gradient {
+        animation: none;
+        background: linear-gradient(135deg, #a855f7 0%, #ec4899 25%, #f59e0b 50%, #10b981 75%, #3b82f6 100%);
+    }
+    
+    body.profile-page {
+        animation: none;
+        background: linear-gradient(135deg, #0f172a 0%, #581c87 25%, #be185d 50%, #1e40af 75%, #0f172a 100%);
+    }
+}
+
+/* ================================================ */
+/* FONDO MOBILE ALTERNATIVO (BACKUP) */
+/* ================================================ */
+
+/* Si la solución anterior no funciona, usar background en el body */
+@media (max-width: 768px) {
+    /* Método alternativo: usar background en el body */
+    body:not(.profile-page) {
+        background: linear-gradient(to bottom right, 
+            rgb(15 23 42) 0%, 
+            rgb(88 28 135) 50%, 
+            rgb(15 23 42) 100%);
+        background-attachment: fixed;
+        min-height: 100vh;
+    }
+    
+    /* Agregar overlay de mesh al body */
+    body:not(.profile-page)::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+            radial-gradient(circle at 25% 25%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 75% 75%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 75% 25%, rgba(236, 72, 153, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 25% 75%, rgba(59, 130, 246, 0.3) 0%, transparent 50%);
+        background-size: 400% 400%;
+        opacity: 0.8;
+        z-index: -2;
+        pointer-events: none;
+    }
+    
+    /* Overlay oscuro */
+    body:not(.profile-page)::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.2);
+        z-index: -1;
+        pointer-events: none;
+    }
+    
+    /* Ocultar el fondo original en móviles */
+    body:not(.profile-page) .fixed.inset-0.z-0 {
+        display: none;
+    }
+}
+
+
+/* ================================================ */
+/* ESTILOS ESPECÍFICOS PARA FRIENDS */
+/* ================================================ */
+
+/* Aplicar el mismo sistema de fondo que perfil */
+body.friends-page {
+    background: linear-gradient(to bottom right, 
+        rgb(15 23 42) 0%, 
+        rgb(88 28 135) 50%, 
+        rgb(15 23 42) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+body.friends-page::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 75% 25%, rgba(236, 72, 153, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 25% 75%, rgba(59, 130, 246, 0.3) 0%, transparent 50%);
+    background-size: 400% 400%;
+    opacity: 0.8;
+    z-index: -2;
+    pointer-events: none;
+}
+
+body.friends-page::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: -1;
+    pointer-events: none;
+}
+
+body.friends-page .absolute.inset-0.z-0 {
+    display: none !important;
+}
+
+/* Contenedor de búsqueda */
+.friends-search-container {
+    @apply mb-8;
+}
+
+.friends-search-form {
+    @apply mb-6;
+}
+
+/* Cards de usuario */
+.user-card {
+    @apply p-4 rounded-xl backdrop-blur-lg border border-white/20 transition-all duration-300;
+    background: rgba(255, 255, 255, 0.05);
+    transform: scale(1);
+}
+
+.user-card:hover {
+    transform: scale(1.02);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.user-card.pending {
+    border-color: rgba(234, 179, 8, 0.4);
+    background: rgba(234, 179, 8, 0.1);
+}
+
+.user-info {
+    @apply flex items-center space-x-4 mb-4;
+}
+
+.user-avatar {
+    @apply w-12 h-12 rounded-full flex items-center justify-center;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.user-avatar.pending {
+    background: linear-gradient(135deg, #eab308, #ca8a04);
+}
+
+.user-name {
+    @apply text-white font-semibold text-lg;
+}
+
+.user-email {
+    @apply text-white/60 text-sm;
+}
+
+.pending-label {
+    @apply text-yellow-300 text-xs font-medium;
+}
+
+/* Botones de acción de amigos */
+.friend-action-btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-300 flex items-center text-sm;
+    transform: scale(1);
+}
+
+.friend-action-btn:hover {
+    transform: scale(1.05);
+}
+
+.friend-action-btn.invite {
+    @apply bg-green-600 text-white;
+}
+
+.friend-action-btn.invite:hover {
+    @apply bg-green-700;
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+}
+
+.friend-action-btn.accept {
+    @apply bg-green-600 text-white mr-2;
+}
+
+.friend-action-btn.accept:hover {
+    @apply bg-green-700;
+}
+
+.friend-action-btn.reject {
+    @apply bg-red-600 text-white;
+}
+
+.friend-action-btn.reject:hover {
+    @apply bg-red-700;
+}
+
+.friend-actions {
+    @apply flex items-center space-x-2;
+}
+
+/* Badges de contador */
+.invite-badge,
+.friends-count {
+    @apply ml-3 px-2 py-1 bg-orange-500 text-white text-xs font-bold rounded-full;
+}
+
+/* Grid de amigos */
+.friends-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4;
+}
+
+.friend-card {
+    @apply p-4 rounded-xl backdrop-blur-lg border border-white/20 transition-all duration-300;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.friend-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.friend-info {
+    @apply flex items-start space-x-3 mb-3;
+}
+
+.friend-avatar {
+    @apply w-10 h-10 rounded-full flex items-center justify-center;
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.friend-details {
+    @apply flex-1;
+}
+
+.friend-name {
+    @apply text-white font-semibold;
+}
+
+.friend-email {
+    @apply text-white/60 text-sm;
+}
+
+.friend-status {
+    @apply flex items-center space-x-2 mt-1;
+}
+
+.status-dot {
+    @apply w-2 h-2 rounded-full;
+}
+
+.status-dot.online {
+    @apply bg-green-400;
+    animation: pulse 2s infinite;
+}
+
+.status-dot.offline {
+    @apply bg-red-500;
+}
+
+.status-text {
+    @apply text-xs;
+}
+
+.status-dot.online + .status-text {
+    @apply text-green-400;
+}
+
+.status-dot.offline + .status-text {
+    @apply text-red-500;
+}
+
+.friend-quick-btn {
+    @apply p-2 rounded-lg transition-all duration-300;
+    transform: scale(1);
+}
+
+.friend-quick-btn:hover {
+    transform: scale(1.1);
+}
+
+.friend-quick-btn.challenge {
+    @apply bg-blue-600/20 text-blue-400 border border-blue-600/40;
+}
+
+.friend-quick-btn.challenge:hover {
+    @apply bg-blue-600/30;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+}
+
+.friend-quick-btn.remove {
+    @apply bg-red-600/20 text-red-400 border border-red-600/40 ml-2;
+}
+
+.friend-quick-btn.remove:hover {
+    @apply bg-red-600/30;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+}
+
+/* Responsive para Friends */
+@media (max-width: 768px) {
+    .user-card {
+        @apply p-3;
+    }
+    
+    .user-info {
+        @apply flex-col space-x-0 space-y-3 text-center;
+    }
+    
+    .friend-actions {
+        @apply flex-col space-x-0 space-y-2;
+    }
+    
+    .friend-action-btn {
+        @apply w-full justify-center;
+    }
+    
+    .friends-grid {
+        @apply grid-cols-1;
+    }
+}
+
+
+/* ================================================ */
+/* ESTILOS ESPECÍFICOS PARA EDIT PROFILE */
+/* ================================================ */
+
+/* Aplicar el mismo sistema de fondo que otras páginas */
+body.edit-profile-page {
+    background: linear-gradient(to bottom right, 
+        rgb(15 23 42) 0%, 
+        rgb(88 28 135) 50%, 
+        rgb(15 23 42) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+body.edit-profile-page::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 75% 25%, rgba(236, 72, 153, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 25% 75%, rgba(59, 130, 246, 0.3) 0%, transparent 50%);
+    background-size: 400% 400%;
+    opacity: 0.8;
+    z-index: -2;
+    pointer-events: none;
+}
+
+body.edit-profile-page::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: -1;
+    pointer-events: none;
+}
+
+body.edit-profile-page .absolute.inset-0.z-0 {
+    display: none !important;
+}
+
+/* Container del formulario */
+.edit-profile-container {
+    @apply max-w-2xl mx-auto;
+}
+
+/* Mensaje de error */
+.error-message {
+    @apply flex items-center p-4 mb-6 rounded-xl border border-red-500/30 text-red-300 font-medium;
+    background: rgba(239, 68, 68, 0.1);
+    animation: fadeInUp 0.3s ease-out;
+}
+
+/* Formulario principal */
+.edit-profile-form {
+    @apply space-y-8;
+}
+
+/* Secciones del formulario */
+.form-section {
+    @apply space-y-6;
+}
+
+.section-header {
+    @apply flex items-center space-x-3 mb-4;
+}
+
+.section-title {
+    @apply text-xl font-bold text-white;
+}
+
+/* Contenedor de avatar */
+.avatar-upload-container {
+    @apply space-y-6;
+}
+
+.current-avatar {
+    @apply flex items-center space-x-4;
+}
+
+.avatar-preview {
+    @apply w-20 h-20 rounded-full flex items-center justify-center overflow-hidden;
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.avatar-info {
+    @apply flex-1;
+}
+
+.avatar-upload-btn {
+    @apply inline-flex items-center px-6 py-3 rounded-xl font-semibold transition-all duration-300 cursor-pointer;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    transform: scale(1);
+}
+
+.avatar-upload-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+}
+
+.upload-hint {
+    @apply text-white/60 text-sm;
+}
+
+/* Grupos de formulario */
+.form-group {
+    @apply space-y-3;
+}
+
+.form-label {
+    @apply flex items-center text-sm font-medium text-white/90 mb-2;
+}
+
+.input-hint {
+    @apply text-white/60 text-xs mt-1;
+}
+
+/* Aviso de seguridad */
+.security-notice {
+    @apply flex items-start space-x-3 p-4 rounded-xl border border-amber-500/30 mb-6;
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.security-title {
+    @apply text-amber-300 font-medium text-sm;
+}
+
+.security-text {
+    @apply text-amber-200/80 text-xs mt-1;
+}
+
+/* Acciones del formulario */
+.form-actions {
+    @apply flex flex-col sm:flex-row gap-4 justify-end pt-6 border-t border-white/20;
+}
+
+.form-actions .btn-secondary,
+.form-actions .btn-primary {
+    @apply flex items-center justify-center px-8 py-3;
+}
+
+/* Animaciones específicas */
+.edit-profile-container {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Responsive para Edit Profile */
+@media (max-width: 768px) {
+    .edit-profile-container {
+        @apply p-6 rounded-2xl;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        width: calc(100% - 2rem);
+    }
+    
+    .current-avatar {
+        @apply flex-col text-center space-x-0 space-y-3;
+    }
+    
+    .avatar-preview {
+        @apply w-16 h-16 mx-auto;
+    }
+    
+    .form-actions {
+        @apply flex-col;
+    }
+    
+    .section-header {
+        @apply text-center flex-col space-x-0 space-y-2;
+    }
+    
+    .section-title {
+        @apply text-lg;
+    }
+}
+
+@media (max-width: 480px) {
+    .edit-profile-container {
+        @apply p-4 rounded-xl;
+    }
+    
+    .avatar-preview {
+        @apply w-14 h-14;
+    }
+    
+    .avatar-upload-btn {
+        @apply px-4 py-2 text-sm;
+    }
+    
+    .section-title {
+        @apply text-base;
+    }
+}
+
+/* Estados de focus mejorados para el formulario */
+.edit-profile-form input:focus,
+.edit-profile-form textarea:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+}
+
+/* Animación para mensajes de error */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+
+/* ================================================ */
+/* ESTILOS ESPECÍFICOS PARA GAME */
+/* ================================================ */
+
+/* Aplicar el mismo sistema de fondo que otras páginas */
+body.game-page {
+    background: linear-gradient(to bottom right, 
+        rgb(15 23 42) 0%, 
+        rgb(88 28 135) 50%, 
+        rgb(15 23 42) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+body.game-page::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 75% 25%, rgba(236, 72, 153, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 25% 75%, rgba(59, 130, 246, 0.3) 0%, transparent 50%);
+    background-size: 400% 400%;
+    opacity: 0.8;
+    z-index: -2;
+    pointer-events: none;
+}
+
+body.game-page::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: -1;
+    pointer-events: none;
+}
+
+body.game-page .absolute.inset-0.z-0 {
+    display: none !important;
+}
+
+/* Contenedor principal del game */
+.game-container {
+    @apply max-w-2xl mx-auto;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Título del game */
+.game-title {
+    @apply text-3xl sm:text-4xl md:text-5xl font-black mb-4 leading-tight;
+}
+
+.game-subtitle {
+    @apply text-white/70 text-lg mb-8 leading-relaxed;
+}
+
+/* Formulario del game */
+.game-form {
+    @apply space-y-8;
+}
+
+/* Cards de opciones */
+.game-option-card {
+    @apply p-6 rounded-2xl backdrop-blur-lg border border-white/20 transition-all duration-300;
+    background: rgba(255, 255, 255, 0.05);
+    animation: fadeInUp 0.6s ease-out;
+    transform: scale(1);
+}
+
+
+
+.game-option-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.02);
+    box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2);
+}
+
+/* Header de las opciones */
+.option-header {
+    @apply flex items-center space-x-4 mb-6;
+}
+
+.option-icon {
+    @apply w-12 h-12 rounded-xl flex items-center justify-center text-white;
+    transition: transform 0.2s ease-out;
+}
+
+.game-option-card:hover .option-icon {
+    transform: scale(1.1);
+}
+
+.option-title {
+    @apply text-xl font-bold text-white mb-1;
+}
+
+.option-desc {
+    @apply text-white/60 text-sm;
+}
+
+/* Control de opciones */
+.option-control {
+    @apply space-y-4;
+}
+
+/* Toggle de IA personalizado */
+.ai-toggle {
+    @apply flex items-center space-x-4 cursor-pointer;
+}
+
+.ai-checkbox {
+    @apply hidden;
+}
+
+.ai-toggle-slider {
+    @apply relative w-14 h-8 bg-white/20 rounded-full transition-all duration-300;
+    backdrop-filter: blur(10px);
+}
+
+.ai-checkbox:checked + .ai-toggle-slider {
+    @apply bg-gradient-to-r from-green-500 to-emerald-600;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+}
+
+.ai-toggle-button {
+    @apply absolute top-1 left-1 w-6 h-6 bg-white rounded-full transition-all duration-300;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.ai-checkbox:checked + .ai-toggle-slider .ai-toggle-button {
+    transform: translateX(24px);
+}
+
+.ai-toggle-label {
+    @apply text-white font-semibold text-lg;
+    transition: color 0.3s ease;
+}
+
+.ai-checkbox:checked ~ .ai-toggle-label {
+    @apply text-green-400;
+}
+
+.ai-hint {
+    @apply text-white/50 text-sm mt-2;
+}
+
+/* Input del nombre del juego */
+.game-name-input {
+    @apply w-full px-5 py-4 rounded-xl border border-white/20 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/30;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-size: 16px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.game-name-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.game-name-input:focus {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+}
+
+.game-name-input:hover {
+    border-color: rgba(168, 85, 247, 0.4);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* Acciones del game */
+.game-actions {
+    @apply flex flex-col sm:flex-row gap-4 justify-center pt-8 border-t border-white/20;
+}
+
+.game-create-btn,
+.game-cancel-btn {
+    @apply flex items-center justify-center px-8 py-4 font-semibold rounded-xl transition-all duration-300;
+    transform: scale(1);
+}
+
+.game-create-btn {
+    @apply text-white;
+    background: linear-gradient(to right, #22c55e, #16a34a);
+    animation: glow-green 2s ease-in-out infinite alternate;
+}
+
+.game-create-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+}
+
+.game-cancel-btn {
+    @apply text-white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.game-cancel-btn:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Items de navegación móvil */
+.mobile-nav-item {
+    @apply block px-4 py-2 rounded-xl text-white/80 hover:text-white transition-all duration-300;
+}
+
+.mobile-nav-item.active {
+    @apply text-white bg-white/20 border border-white/30;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+    animation: subtle-pulse 4s ease-in-out infinite;
+}
+
+.mobile-nav-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.02);
+}
+
+/* Responsive específico para Game */
+@media (max-width: 768px) {
+    .game-container {
+        @apply p-6 rounded-2xl;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        width: calc(100% - 2rem);
+    }
+    
+    .game-title {
+        @apply text-2xl sm:text-3xl;
+    }
+    
+    .game-subtitle {
+        @apply text-base;
+    }
+    
+    .game-option-card {
+        @apply p-4;
+    }
+    
+    .option-header {
+        @apply flex-col space-x-0 space-y-3 text-center;
+    }
+    
+    .option-icon {
+        @apply w-10 h-10 mx-auto;
+    }
+    
+    .ai-toggle {
+        @apply flex-col space-x-0 space-y-3 text-center;
+    }
+    
+    .game-actions {
+        @apply flex-col;
+    }
+    
+    .game-create-btn,
+    .game-cancel-btn {
+        @apply w-full justify-center;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-container {
+        @apply p-4 rounded-xl;
+    }
+    
+    .game-title {
+        @apply text-xl;
+    }
+    
+    .game-option-card {
+        @apply p-3;
+    }
+    
+    .option-title {
+        @apply text-lg;
+    }
+    
+    .ai-toggle-slider {
+        @apply w-12 h-7;
+    }
+    
+    .ai-toggle-button {
+        @apply w-5 h-5;
+    }
+    
+    .ai-checkbox:checked + .ai-toggle-slider .ai-toggle-button {
+        transform: translateX(20px);
+    }
+}
+
+/* Estados de focus mejorados */
+.ai-toggle:focus-within .ai-toggle-slider {
+    outline: 2px solid rgba(168, 85, 247, 0.8);
+    outline-offset: 2px;
+}
+
+.game-name-input:focus-visible {
+    outline: 2px solid rgba(168, 85, 247, 0.8);
+    outline-offset: 2px;
+}
+
+/* Animación personalizada para el glow del botón crear */
+@keyframes glow-green {
+    0% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.4); }
+    100% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.8); }
+}
+
+
+
+/* ================================================ */
+/* ESTILOS ESPECÍFICOS PARA TOURNAMENT */
+/* ================================================ */
+
+/* Aplicar el mismo sistema de fondo que otras páginas */
+body.tournament-page {
+    background: linear-gradient(to bottom right, 
+        rgb(15 23 42) 0%, 
+        rgb(88 28 135) 50%, 
+        rgb(15 23 42) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+body.tournament-page::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 75% 25%, rgba(236, 72, 153, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 25% 75%, rgba(59, 130, 246, 0.3) 0%, transparent 50%);
+    background-size: 400% 400%;
+    opacity: 0.8;
+    z-index: -2;
+    pointer-events: none;
+}
+
+body.tournament-page::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: -1;
+    pointer-events: none;
+}
+
+body.tournament-page .absolute.inset-0.z-0 {
+    display: none !important;
+}
+
+/* Contenedor principal del tournament */
+.tournament-container {
+    @apply max-w-4xl mx-auto;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Título del tournament */
+.tournament-title {
+    @apply text-3xl sm:text-4xl md:text-5xl font-black mb-4 leading-tight;
+}
+
+.tournament-subtitle {
+    @apply text-white/70 text-lg mb-12 leading-relaxed;
+}
+
+/* Formulario del tournament */
+.tournament-form {
+    @apply space-y-6;
+}
+
+/* Grid de jugadores */
+.players-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-6 mb-8;
+}
+
+/* Card de cada jugador */
+.player-card {
+    @apply p-6 rounded-2xl backdrop-blur-lg border border-white/20 transition-all duration-300;
+    background: rgba(255, 255, 255, 0.05);
+    transform: scale(1);
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.player-card:nth-child(1) { animation-delay: 0.1s; }
+.player-card:nth-child(2) { animation-delay: 0.2s; }
+.player-card:nth-child(3) { animation-delay: 0.3s; }
+.player-card:nth-child(4) { animation-delay: 0.4s; }
+.player-card:nth-child(5) { animation-delay: 0.5s; }
+.player-card:nth-child(6) { animation-delay: 0.6s; }
+.player-card:nth-child(7) { animation-delay: 0.7s; }
+
+.player-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.02);
+    box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2);
+}
+
+/* Header de la card de jugador */
+.player-header {
+    @apply flex items-center space-x-3 mb-4;
+}
+
+.player-icon {
+    @apply w-10 h-10 rounded-xl flex items-center justify-center text-white;
+    transition: transform 0.2s ease-out;
+}
+
+.player-card:hover .player-icon {
+    transform: scale(1.1);
+}
+
+.player-number {
+    @apply text-lg font-bold text-white;
+}
+
+/* Colores únicos para cada jugador */
+.player-card:nth-child(1) .player-icon {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.player-card:nth-child(2) .player-icon {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+}
+
+.player-card:nth-child(3) .player-icon {
+    background: linear-gradient(135deg, #eab308, #ca8a04);
+}
+
+.player-card:nth-child(4) .player-icon {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.player-card:nth-child(5) .player-icon {
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+}
+
+.player-card:nth-child(6) .player-icon {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.player-card:nth-child(7) .player-icon {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+/* Controles del jugador */
+.player-controls {
+    @apply space-y-4;
+}
+
+/* Input del nombre del jugador */
+.player-name-input {
+    @apply w-full px-4 py-3 rounded-xl border border-white/20 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/30;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-size: 16px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.player-name-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.player-name-input:focus {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+}
+
+.player-name-input:hover {
+    border-color: rgba(168, 85, 247, 0.4);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* Toggle de IA para jugadores */
+.player-ai-toggle {
+    @apply flex items-center justify-between;
+}
+
+.ai-toggle-small {
+    @apply flex items-center space-x-3 cursor-pointer;
+}
+
+.ai-checkbox-small {
+    @apply hidden;
+}
+
+.ai-toggle-slider-small {
+    @apply relative w-12 h-6 bg-white/20 rounded-full transition-all duration-300;
+    backdrop-filter: blur(10px);
+}
+
+.ai-checkbox-small:checked + .ai-toggle-slider-small {
+    @apply bg-gradient-to-r from-green-500 to-emerald-600;
+    box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+}
+
+.ai-toggle-button-small {
+    @apply absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-all duration-300;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.ai-checkbox-small:checked + .ai-toggle-slider-small .ai-toggle-button-small {
+    transform: translateX(24px);
+}
+
+.ai-toggle-label-small {
+    @apply text-white/80 font-medium;
+    transition: color 0.3s ease;
+}
+
+.ai-checkbox-small:checked ~ .ai-toggle-label-small {
+    @apply text-green-400;
+}
+
+/* Acciones del tournament */
+.tournament-actions {
+    @apply flex flex-col sm:flex-row gap-4 justify-center pt-8 border-t border-white/20;
+    animation: fadeInUp 0.6s ease-out 0.8s both;
+}
+
+.tournament-create-btn,
+.tournament-cancel-btn {
+    @apply flex items-center justify-center px-8 py-4 font-semibold rounded-xl transition-all duration-300;
+    transform: scale(1);
+}
+
+.tournament-create-btn {
+    @apply text-white;
+    background: linear-gradient(to right, #8b5cf6, #7c3aed);
+    animation: glow-purple 2s ease-in-out infinite alternate;
+}
+
+.tournament-create-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+}
+
+.tournament-cancel-btn {
+    @apply text-white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tournament-cancel-btn:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Badge del tournament */
+.tournament-badge {
+    @apply inline-block px-4 py-2 rounded-full text-purple-300 text-sm font-medium glass-effect neon-border mb-6;
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Responsive específico para Tournament */
+@media (max-width: 768px) {
+    .tournament-container {
+        @apply p-6 rounded-2xl;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        width: calc(100% - 2rem);
+    }
+    
+    .tournament-title {
+        @apply text-2xl sm:text-3xl;
+    }
+    
+    .tournament-subtitle {
+        @apply text-base mb-8;
+    }
+    
+    .players-grid {
+        @apply grid-cols-1 gap-4;
+    }
+    
+    .player-card {
+        @apply p-4;
+    }
+    
+    .player-header {
+        @apply flex-col space-x-0 space-y-2 text-center;
+    }
+    
+    .player-icon {
+        @apply w-8 h-8 mx-auto;
+    }
+    
+    .player-ai-toggle {
+        @apply flex-col space-y-3;
+    }
+    
+    .tournament-actions {
+        @apply flex-col;
+    }
+    
+    .tournament-create-btn,
+    .tournament-cancel-btn {
+        @apply w-full justify-center;
+    }
+}
+
+@media (max-width: 480px) {
+    .tournament-container {
+        @apply p-4 rounded-xl;
+    }
+    
+    .tournament-title {
+        @apply text-xl;
+    }
+    
+    .player-card {
+        @apply p-3;
+    }
+    
+    .player-name-input {
+        @apply py-2 px-3 text-sm;
+    }
+    
+    .ai-toggle-slider-small {
+        @apply w-10 h-5;
+    }
+    
+    .ai-toggle-button-small {
+        @apply w-4 h-4;
+    }
+    
+    .ai-checkbox-small:checked + .ai-toggle-slider-small .ai-toggle-button-small {
+        transform: translateX(20px);
+    }
+}
+
+/* Estados de focus mejorados */
+.player-name-input:focus-visible {
+    outline: 2px solid rgba(168, 85, 247, 0.8);
+    outline-offset: 2px;
+}
+
+.ai-toggle-small:focus-within .ai-toggle-slider-small {
+    outline: 2px solid rgba(168, 85, 247, 0.8);
+    outline-offset: 2px;
+}
+
+/* Animación personalizada para el glow del botón crear tournament */
+@keyframes glow-purple {
+    0% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.4); }
+    100% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.8); }
+}
+
+/* Indicador visual de jugadores requeridos */
+.required-players-hint {
+    @apply text-center text-white/60 text-sm mb-6 p-4 rounded-xl border border-amber-500/30;
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.required-players-hint .highlight {
+    @apply text-amber-300 font-semibold;
+}
+
+/* ================================================ */
+/* ESTILOS PARA HEADER Y NAVEGACIÓN */
+/* ================================================ */
+
+/* Asegurar que el header tenga z-index alto */
+header {
+    position: relative;
+    z-index: 1000 !important;
+    pointer-events: auto !important;
+}
+
+/* Navegación principal */
+nav {
+    position: relative;
+    z-index: 1001 !important;
+    pointer-events: auto !important;
+}
+
+/* Botón del menú móvil */
+.mobile-menu-btn {
+    position: relative;
+    z-index: 1002 !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+}
+
+/* Menú móvil desplegable */
+#mobileMenu {
+    position: relative;
+    z-index: 999 !important;
+    pointer-events: auto !important;
+}
+
+/* ================================================ */
+/* ESTILOS PARA LANGUAGE SWITCHER */
+/* ================================================ */
+
+/* Contenedor principal del language switcher */
+.language-switcher-container {
+    position: fixed !important;
+    top: 1.5rem !important;
+    right: 1.5rem !important;
+    z-index: 2147483647 !important; /* Valor máximo de z-index */
+    isolation: isolate;
+}
+
+/* Botón del language switcher */
+.language-switcher-btn {
+    @apply flex items-center px-3 py-2 rounded-lg text-white/80 hover:text-white transition-all duration-300;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transform: scale(1);
+    position: relative;
+    z-index: 999999 !important;
+}
+
+.language-switcher-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+}
+
+/* Menú desplegable del language switcher */
+.language-menu {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    box-shadow: 
+        0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    animation: fadeInUp 0.2s ease-out;
+    transform: translateY(0) !important;
+    isolation: isolate !important;
+    will-change: transform, opacity;
+}
+
+/* Asegurar que el language menu esté siempre por encima */
+.language-menu {
+    pointer-events: auto !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Items del menú de idioma */
+.language-menu-item {
+    @apply flex items-center justify-between w-full px-4 py-3 text-gray-700 hover:bg-gray-100 transition-colors duration-200;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.language-menu-item:last-child {
+    border-bottom: none;
+}
+
+.language-menu-item:hover {
+    background: rgba(168, 85, 247, 0.1);
+    color: #8b5cf6;
+}
+
+.language-menu-item.active {
+    background: rgba(168, 85, 247, 0.15);
+    color: #7c3aed;
+    font-weight: 600;
+}
+
+.language-menu-item.active:hover {
+    background: rgba(168, 85, 247, 0.2);
+}
+
+/* Responsive para language switcher */
+@media (max-width: 640px) {
+    .language-switcher-btn {
+        @apply px-2 py-1 text-sm;
+    }
+    
+    .language-menu {
+        width: 12rem;
+    }
+    
+    .language-menu-item {
+        @apply px-3 py-2 text-sm;
+    }
+}
+
+/* ================================================ */
+
+/* Asegura el contenedor principal del torneo (basado en .glass-container) */
+.tournament-container {
+    @apply glass-container;
+}
+
+/* Estilos para el cuadro del torneo */
+.bracket { 
+    @apply flex flex-row overflow-x-auto pb-5; /* Permite scroll horizontal */
+}
+
+/* Estilos para cada ronda */
+.round { 
+    @apply mr-8 min-w-min; 
+    min-width: 250px;
+}
+
+/* Card de partida individual del torneo (usando estilos similares a match-card) */
+.tournament-match-card { 
+    /* Estilos del match-card estándar del perfil */
+    @apply p-4 rounded-xl backdrop-blur-lg border border-white/20 transition-all duration-300 mb-5;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.tournament-match-card:hover { 
+    /* Estilos de hover */
+    @apply scale-100; /* No escalamos tanto el bracket */
+    background: rgba(255, 255, 255, 0.08);
+    cursor: default;
+}
+
+/* Botón Jugar (adaptado a btn-primary) */
+.tournament-play-btn { 
+    @apply inline-flex items-center px-4 py-2 bg-purple-600 text-white font-medium rounded-lg transition-colors duration-300;
+}
+
+.tournament-play-btn:hover {
+    @apply bg-purple-700;
+}
+
+/* Estilo para el ganador dentro de la card (usando clase .match-status) */
+.match-card .match-status { 
+    @apply font-semibold; 
+    color: #22c55e; /* Verde de Tailwind */
+}
+
+
+/* RESPONSIVE para que las tarjetas se apilen mejor en móvil */
+@media (max-width: 768px) {
+    .bracket {
+        /* Desactiva el flex-row en móvil si se prefiere una vista vertical, o
+           ajusta min-width si se quiere mantener el scroll */
+        flex-direction: column;
+    }
+    .round {
+        @apply mr-0 mb-6;
+        min-width: 100%;
+    }
+}

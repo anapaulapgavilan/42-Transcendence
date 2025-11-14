@@ -1,0 +1,21 @@
+services:
+  # ------------------------------------
+  # Servicio 1: Servidor Node.js (Fastify/Frontend/SQLite)
+  # ------------------------------------
+  frontend: # O 'app' como lo hayas llamado
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend # Usa el nuevo Dockerfile
+    container_name: ft_transcendence_frontend
+    # Mapea el puerto 3000 del host al puerto 3000 del contenedor
+    ports:
+      - "10000:10000"
+    volumes:
+      - ./db:/app/db
+      - ./certs:/app/certs
+    env_file:
+      - .env
+    restart: always
+
+# Quitar networks y volumes, ya que no son necesarios para un solo contenedor con SQLite
+

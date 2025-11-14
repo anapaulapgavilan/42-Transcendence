@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+    <meta charset="UTF-8" />
+    <title><%= typeof t !== 'undefined' ? t('friends.title') : 'Amigos' %> - <%= typeof t !== 'undefined' ? t('common.gameTitle') : 'ft_transcendence' %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- FAVICON -->
+    <link rel="icon" type="image/svg+xml" href="/public/favicon.svg">
+    
+    <!-- CSS compilado por Tailwind -->
+    <link href="/public/styles.css" rel="stylesheet" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-full font-poppins friends-page">
+    <!-- Fondo con gradiente y mesh (mismo que otras páginas) -->
+    <div class="absolute inset-0 z-0 min-h-screen">
+        <!-- Gradiente base -->
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"></div>
+        
+        <!-- Gradiente vibrante -->
+        <div class="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-pink-500/30 to-blue-600/20 bg-mesh opacity-80"></div>
+        
+        <!-- Overlay oscuro para mejor contraste -->
+        <div class="absolute inset-0 bg-black/20"></div>
+        
+        <!-- Partículas flotantes -->
+        <div class="absolute inset-0">
+            <div class="floating-particle particle-1"></div>
+            <div class="floating-particle particle-2"></div>
+            <div class="floating-particle particle-3"></div>
+            <div class="floating-particle particle-4"></div>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="relative z-10 min-h-screen flex flex-col">
+        <!-- Header/Navbar (igual que home y perfil) -->
+        <header class="p-6 glass-effect">
+            <nav class="flex justify-between items-center max-w-7xl mx-auto">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">42</span>
+                    </div>
+                    <span class="text-white font-semibold text-lg">ft_transcendence</span>
+                </div>
+
+                <!-- Navegación Principal -->
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="/home" class="nav-menu-item">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                        <span><%= typeof t !== 'undefined' ? t('common.home') : 'Home' %></span>
+                    </a>
+                    
+                    <a href="/profile" class="nav-menu-item">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        <span><%= typeof t !== 'undefined' ? t('common.profile') : 'Perfil' %></span>
+                    </a>
+                    
+                    <a href="/game" class="nav-menu-item">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.01M15 10h1.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span><%= typeof t !== 'undefined' ? t('common.game') : 'Game' %></span>
+                    </a>
+                    <!--
+                    <a href="/friends" class="nav-menu-item active">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
+                        </svg>
+                        <span>Amigos</span>
+                    </a> -->
+                    
+                    <a href="/tournament" class="nav-menu-item">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                        </svg>
+                        <span><%= typeof t !== 'undefined' ? t('common.tournaments') : 'Torneos' %></span>
+                    </a>
+                </div>
+
+                <!-- Usuario y Logout -->
+                <div class="flex items-center space-x-4">
+                    <!-- Language Switcher -->
+                    <div class="hidden sm:block">
+                        <%- include('components/languageSwitcher') %>
+                    </div>
+                    
+                    <!-- Info del usuario -->
+                    <div class="hidden sm:flex items-center space-x-3">
+                        <div class="text-right">
+                            <p class="text-white text-sm font-medium"><%= typeof t !== 'undefined' ? t('common.profile') : 'Usuario' %></p>
+                            <p class="text-white/60 text-xs"><%= typeof t !== 'undefined' ? t('common.level') : 'Nivel' %> <%= (Math.floor((user.wins + user.looses) / 5) + 1) %></p> 
+                        </div>
+                        <div class="w-10 h-10 bg-gradient-to-r from-orange-500 to-pink-500 rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">U</span>
+                        </div>
+                    </div>
+
+                    <!-- Botón Logout -->
+                    <button onclick="logout()" class="logout-btn">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Menú Móvil -->
+                <div class="md:hidden">
+                    <button class="text-white mobile-menu-btn" type="button" aria-label="Toggle menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Menú móvil desplegable -->
+            <div id="mobileMenu" class="md:hidden hidden mt-4 pt-4 border-t border-white/10">
+                <div class="flex flex-col space-y-2">
+                    <a href="/home" class="mobile-nav-item"><%= typeof t !== 'undefined' ? t('common.home') : 'Home' %></a>
+                    <a href="/profile" class="mobile-nav-item"><%= typeof t !== 'undefined' ? t('common.profile') : 'Perfil' %></a>
+                    <a href="/game" class="mobile-nav-item"><%= typeof t !== 'undefined' ? t('common.game') : 'Game' %></a>
+                    <a href="/friends" class="mobile-nav-item active"><%= typeof t !== 'undefined' ? t('common.friends') : 'Amigos' %></a>
+                    <a href="/tournament" class="mobile-nav-item"><%= typeof t !== 'undefined' ? t('common.tournaments') : 'Torneos' %></a>
+                    <div class="pt-3 border-t border-white/10">
+                        <%- include('components/languageSwitcher') %>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Contenido principal -->
+        <main class="flex-1 px-6 py-8">
+            <div class="w-full max-w-6xl mx-auto space-y-8">
+                
+                <!-- Header de la página -->
+                <div class="glass-container">
+                    <div class="text-center mb-8">
+                        <h1 class="text-4xl sm:text-5xl font-black mb-4">
+                            <span class="text-gradient font-orbitron">
+                                🤝 <%= typeof t !== 'undefined' ? t('friends.title') : 'AMIGOS' %>
+                            </span>
+                        </h1>
+                        <p class="text-white/70 text-lg">
+                            <%= typeof t !== 'undefined' ? t('friends.subtitle') : 'Conecta, juega y compite con tus amigos' %>
+                        </p>
+                    </div>
+
+                    <!-- Buscador de amigos -->
+                    <div class="friends-search-container">
+                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center">
+                            <svg class="w-6 h-6 mr-3 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            <%= typeof t !== 'undefined' ? t('friends.searchUsers') : 'Buscar Usuarios' %>
+                        </h2>
+                        
+                      <form action="/friends" method="POST" class="friends-search-form">
+    <div class="flex flex-col sm:flex-row gap-3">
+        <input 
+            type="text" 
+            name="searchQuery" 
+            placeholder="<%= typeof t !== 'undefined' ? t('friends.searchPlaceholder') : 'Buscar por alias o email...' %>" 
+            value="<%= searchQuery || '' %>"
+            class="form-input flex-1"
+            required
+        />
+        
+        <button type="submit" class="btn-primary group">
+            <span class="relative z-10 flex items-center justify-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <%= typeof t !== 'undefined' ? t('friends.searchButton') : 'Buscar' %>
+            </span>
+        </button>
+    </div>
+</form>
+                    </div>
+                </div>
+
+                <!-- Resultados de búsqueda -->
+                <% if (typeof searchResults !== 'undefined') { %>
+                <div class="glass-container">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                        <svg class="w-6 h-6 mr-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                        </svg>
+                        <%= typeof t !== 'undefined' ? t('friends.searchResults') : 'Resultados para' %>: <%= searchQuery %>
+                    </h2>
+
+                    <% if (searchResults.length === 0) { %>
+                        <div class="text-center py-12">
+                            <svg class="w-16 h-16 text-white/30 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <p class="text-white/60"><%= typeof t !== 'undefined' ? t('friends.noUsersFound') : 'No se encontraron usuarios con' %> :<%= searchQuery %></p>
+                        </div>
+                    <% } else { %>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <% searchResults.forEach(user => { %>
+                            <div class="user-card">
+                                <div class="user-info">
+                                    <div class="user-avatar">
+                                        <span class="text-white font-bold">
+                                            <%= user.alias.charAt(0).toUpperCase() %>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <h3 class="user-name"><%= user.alias %></h3>
+                                        <p class="user-email"><%= user.mail %></p>
+                                    </div>
+                                </div>
+                                <form action="/friends" method="POST">
+                                    <input type="hidden" name="userIdToInvite" value="<%= user.id %>" />
+                                    <input type="hidden" name="action" value="invite" />
+                                    <button type="submit" class="friend-action-btn invite">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                        </svg>
+                                        <%= typeof t !== 'undefined' ? t('friends.inviteFriend') : 'Invitar' %>
+                                    </button>
+                                </form>
+                            </div>
+                            <% }) %>
+                        </div>
+                    <% } %>
+                </div>
+                <% } %>
+
+                <!-- Invitaciones pendientes -->
+                <div class="glass-container">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                        <svg class="w-6 h-6 mr-3 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <%= typeof t !== 'undefined' ? t('friends.pendingInvites') : 'Invitaciones Pendientes' %>
+                        <% if (pendingInvites.length > 0) { %>
+                            <span class="invite-badge"><%= pendingInvites.length %></span>
+                        <% } %>
+                    </h2>
+
+                    <% if (pendingInvites.length === 0) { %>
+                        <div class="text-center py-8">
+                            <svg class="w-12 h-12 text-white/30 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+                            </svg>
+                            <p class="text-white/60"><%= typeof t !== 'undefined' ? t('friends.noPendingInvites') : 'No tienes invitaciones pendientes' %></p>
+                        </div>
+                    <% } else { %>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <% pendingInvites.forEach(invite => { %>
+                            <div class="user-card pending">
+                                <div class="user-info">
+                                    <div class="user-avatar pending">
+                                        <span class="text-white font-bold">
+                                            <%= invite.alias.charAt(0).toUpperCase() %>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <h3 class="user-name"><%= invite.alias %></h3>
+                                        <p class="user-email"><%= invite.mail %></p>
+                                        <span class="pending-label"><%= typeof t !== 'undefined' ? t('friends.invitationSent') : 'Te ha enviado una invitación' %></span>
+                                    </div>
+                                </div>
+                                <div class="friend-actions">
+                                    <form action="/friends" method="POST" class="inline">
+                                        <input type="hidden" name="inviteId" value="<%= invite.id_user1 %>" />
+                                        <input type="hidden" name="action" value="accept" />
+                                        <button type="submit" class="friend-action-btn accept">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                            <%= typeof t !== 'undefined' ? t('friends.acceptInvite') : 'Aceptar' %>
+                                        </button>
+                                    </form>
+                                    <form action="/friends" method="POST" class="inline">
+                                        <input type="hidden" name="inviteId" value="<%= invite.id_user1 %>" />
+                                        <input type="hidden" name="action" value="reject" />
+                                        <button type="submit" class="friend-action-btn reject">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                            </svg>
+                                            <%= typeof t !== 'undefined' ? t('friends.rejectInvite') : 'Rechazar' %>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            <% }) %>
+                        </div>
+                    <% } %>
+                </div>
+
+                <!-- Lista de amigos -->
+                <div class="glass-container">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                        <svg class="w-6 h-6 mr-3 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
+                        </svg>
+                        <%= typeof t !== 'undefined' ? t('friends.myFriends') : 'Mis Amigos' %>
+                        <% if (friends.length > 0) { %>
+                            <span class="friends-count"><%= friends.length %></span>
+                        <% } %>
+                    </h2>
+
+                    <% if (friends.length === 0) { %>
+                        <div class="text-center py-12">
+                            <svg class="w-16 h-16 text-white/30 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
+                            </svg>
+                            <p class="text-white/60 mb-4"><%= typeof t !== 'undefined' ? t('friends.noFriendsYet') : 'Aún no tienes amigos' %></p>
+                            <p class="text-white/40 text-sm"><%= typeof t !== 'undefined' ? t('friends.findUsersHint') : '¡Busca usuarios y envía invitaciones para empezar a jugar!' %></p>
+                        </div>
+                    <% } else { %>
+                        <div class="friends-grid">
+                            <% friends.forEach(friend => { %>
+                            <div class="friend-card">
+                                <div class="friend-info">
+                                    <div class="friend-avatar">
+                                        <span class="text-white font-bold">
+                                            <%= friend.alias.charAt(0).toUpperCase() %>
+                                        </span>
+                                    </div>
+                                    <div class="friend-details">
+                                        <h3 class="friend-name"><%= friend.alias %></h3>
+                                        <p class="friend-email"><%= friend.mail %></p>
+                                        <div class="friend-status">
+                                            <% if (friend.is_online) { %>
+                                                <div class="status-dot online"></div>
+                                                <span class="status-text"><%= typeof t !== 'undefined' ? t('friends.onlineStatus') : 'En línea' %></span>
+                                            <% } else { %>
+                                                <div class="status-dot offline"></div>
+                                                <span class="status-text"><%= typeof t !== 'undefined' ? t('friends.offlineStatus') : 'Fuera de línea' %></span>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="friend-actions">
+                                    <button class="friend-quick-btn challenge" title="<%= typeof t !== 'undefined' ? t('friends.challengeFriend') : 'Desafiar' %>">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.01M15 10h1.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </button>
+                                    <form action="/friends" method="POST" class="inline" onsubmit="return confirmRemoveFriend();">
+                                        <input type="hidden" name="friendId" value="<%= friend.id %>" />
+                                        <input type="hidden" name="action" value="remove" />
+                                        <button type="submit" class="friend-quick-btn remove" title="<%= typeof t !== 'undefined' ? t('friends.removeFriend') : 'Eliminar' %>">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            <% }) %>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- JavaScript para efectos interactivos -->
+    <script src="/public/js/landing.js"></script>
+    
+    <script>
+    function confirmRemoveFriend() {
+        return confirm('Estas seguro de eliminar este amigo?');
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="<%= typeof language !== 'undefined' ? language : 'es' %>" class="h-full">
+<head>
+    <meta charset="UTF-8" />
+    <title><%= typeof t !== 'undefined' ? t('profile.tournaments') : 'Tournament' %> - <%= typeof t !== 'undefined' ? t('common.gameTitle') : 'ft_transcendence' %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="./public/favicon.svg">
+    <link href="/public/styles.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-full font-poppins tournament-page">
+    <!-- Mismo fondo que otras páginas -->
+    <div class="absolute inset-0 z-0 min-h-screen">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-pink-500/30 to-blue-600/20 bg-mesh opacity-80"></div>
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="absolute inset-0">
+            <div class="floating-particle particle-1"></div>
+            <div class="floating-particle particle-2"></div>
+            <div class="floating-particle particle-3"></div>
+            <div class="floating-particle particle-4"></div>
+        </div>
+    </div>
+
+    <div class="relative z-10 min-h-screen flex flex-col">
+ <!-- Header/Navbar -->
+        <header class="p-6 glass-effect">
+            <nav class="flex justify-between items-center max-w-7xl mx-auto">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">42</span>
+                    </div>
+                    <span class="text-white font-semibold text-lg">ft_transcendence</span>
+                </div>
+
+                <!-- Navegación Principal -->
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="/home" class="nav-menu-item">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                        <span><%= typeof t !== 'undefined' ? t('profile.home') : 'Home' %></span>
+                    </a>
+                    
+                    <a href="/profile" class="nav-menu-item">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        <span><%= typeof t !== 'undefined' ? t('profile.profile') : 'Perfil' %></span>
+                    </a>
+                    
+                    <a href="/game" class="nav-menu-item ">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.01M15 10h1.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span><%= typeof t !== 'undefined' ? t('profile.game') : 'Game' %></span>
+                    </a>
+                    
+                    <a href="/tournament" class="nav-menu-item active">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                        </svg>
+                        <span><%= typeof t !== 'undefined' ? t('profile.tournaments') : 'Torneos' %></span>
+                    </a>
+                </div>
+
+                <!-- Usuario y Logout -->
+                <div class="flex items-center space-x-4">
+                    <!-- Language Switcher -->
+                    <div class="hidden sm:block">
+                        <%- include('components/languageSwitcher') %>
+                    </div>
+                    
+                    <!-- Info del usuario -->
+                    <div class="hidden sm:flex items-center space-x-3">
+                        <div class="text-right">
+                            <p class="text-white text-sm font-medium"><%= user.alias %></p>
+                            <p class="text-white/60 text-xs"><%= typeof t !== 'undefined' ? t('profile.level') : 'Nivel' %> <%= (Math.floor((user.wins + user.looses) / 5) + 1) %></p> 
+                        </div>
+                        <div class="w-10 h-10 bg-gradient-to-r from-orange-500 to-pink-500 rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">
+                                <%= user.alias.charAt(0).toUpperCase() %>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Botón Logout -->
+                    <button onclick="logout()" class="logout-btn">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Menú Móvil -->
+                <div class="md:hidden">
+                    <button class="text-white mobile-menu-btn" type="button" aria-label="Toggle menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Menú móvil desplegable -->
+            <div id="mobileMenu" class="md:hidden hidden mt-4 pt-4 border-t border-white/10">
+                <div class="flex flex-col space-y-2">
+                    <a href="/home" class="mobile-nav-item"><%= typeof t !== 'undefined' ? t('profile.home') : 'Home' %></a>
+                    <a href="/profile" class="mobile-nav-item"><%= typeof t !== 'undefined' ? t('profile.profile') : 'Perfil' %></a>
+                    <a href="/game" class="mobile-nav-item"><%= typeof t !== 'undefined' ? t('profile.game') : 'Game' %></a>
+                    <a href="/tournament" class="mobile-nav-item active"><%= typeof t !== 'undefined' ? t('profile.tournaments') : 'Torneos' %></a>
+                    <div class="pt-3 border-t border-white/10">
+                        <%- include('components/languageSwitcher') %>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Contenido principal -->
+        <main class="flex-1 px-6 py-12">
+            <div class="w-full">
+                <div class="tournament-container glass-container">
+                    <div class="text-center mb-12">
+                        <div class="tournament-badge">
+                            <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                            </svg>
+                            <%= typeof t !== 'undefined' ? t('tournament.newTournament') : 'Nuevo Torneo' %>
+                        </div>
+                        
+                        <h1 class="tournament-title">
+                            <span class="block text-gradient font-orbitron tracking-tight"><%= typeof t !== 'undefined' ? t('tournament.createTournament') : 'CREAR TORNEO' %></span>
+                            <span class="block text-gradient font-orbitron tracking-tight text-orange-400"><%= user.alias.toUpperCase() %></span>
+                        </h1>
+
+                        
+                        
+                        <p class="tournament-subtitle"><%= typeof t !== 'undefined' ? t('tournament.configurePlayers') : 'Configura hasta 7 jugadores para el torneo' %></p>
+                        
+                        <div class="required-players-hint">
+                            <%= typeof t !== 'undefined' ? t('tournament.minPlayers') : 'Necesitas al menos' %> <span class="highlight">4 <%= typeof t !== 'undefined' ? t('tournament.players') : 'jugadores' %></span> <%= typeof t !== 'undefined' ? t('tournament.toCreateValid') : 'para crear un torneo válido' %>
+                        </div>
+                    </div>
+
+                    <% if (typeof error !== 'undefined' && error) { %>
+                        <div class="error-message" role="alert">
+                            <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span><%= error %></span>
+                        </div>
+                    <% } %>
+
+                    <!-- Formulario conservando la lógica original -->
+                    <form action="/tournament" method="POST" class="tournament-form">
+                        <div class="players-grid">
+                            <% for (let i = 1; i <= 7; i++) { %>
+                            <div class="player-card">
+                                <div class="player-header">
+                                    <div class="player-icon">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="player-number"><%= typeof t !== 'undefined' ? t('tournament.player') : 'Jugador' %> <%= i %></h3>
+                                </div>
+                                
+                                <div class="player-controls">
+                                    <input 
+                                        type="text" 
+                                        id="player<%= i %>" 
+                                        name="player<%= i %>" 
+                                        placeholder="<%= typeof t !== 'undefined' ? t('tournament.playerName') : 'Nombre jugador' %> <%= i %>"
+                                        class="player-name-input"
+                                    >
+                                    
+                                    <div class="player-ai-toggle">
+                                        <label class="ai-toggle-small">
+                                            <input type="checkbox" name="player<%= i %>_ai" class="ai-checkbox-small">
+                                            <div class="ai-toggle-slider-small">
+                                                <div class="ai-toggle-button-small"></div>
+                                            </div>
+                                            <span class="ai-toggle-label-small">IA</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
+
+                        <div class="tournament-actions">
+                            <button type="submit" class="tournament-create-btn">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                                <%= typeof t !== 'undefined' ? t('tournament.createTournament') : 'Crear Torneo' %>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/public/js/landing.js"></script>
+    
+    <script>
+        const MIN_OPPONENTS = 3; // Oponentes mínimos (además del usuario actual)
+        const totalPlayerInputs = 7;
+        const submitButton = document.querySelector('.tournament-create-btn');
+        const playerInputs = [];
+        let currentPlayerCount = 0;
+
+        // Recolectar todos los inputs de jugador y sus checkboxes de IA
+        for (let i = 1; i <= totalPlayerInputs; i++) {
+            const nameInput = document.getElementById(`player${i}`);
+            const aiCheckbox = document.querySelector(`input[name="player${i}_ai"]`);
+
+            if (nameInput) playerInputs.push(nameInput);
+            if (aiCheckbox) playerInputs.push(aiCheckbox);
+        }
+
+        function checkFormValidity() {
+            let activeOpponents = 0;
+
+            for (let i = 1; i <= totalPlayerInputs; i++) {
+                const nameInput = document.getElementById(`player${i}`);
+                const aiCheckbox = document.querySelector(`input[name="player${i}_ai"]`);
+
+                // Un oponente es válido si tiene nombre O si la IA está marcada.
+                const hasName = nameInput && nameInput.value.trim() !== '';
+                const isAI = aiCheckbox && aiCheckbox.checked;
+
+                if (hasName || isAI) {
+                    activeOpponents++;
+                }
+            }
+
+            currentPlayerCount = activeOpponents;
+            const isValid = activeOpponents >= MIN_OPPONENTS;
+
+            // Deshabilitar/Habilitar botón
+            submitButton.disabled = !isValid;
+
+            // Actualizar hint (opcional)
+            const hintElement = document.querySelector('.required-players-hint');
+            if (hintElement) {
+                hintElement.innerHTML = `Tienes <span class="highlight">${activeOpponents}</span> oponentes. Necesitas al menos <span class="highlight">${MIN_OPPONENTS}</span>.`;
+            }
+
+            // Si el botón está deshabilitado por JS, también debemos prevenir el envío
+            return isValid;
+        }
+
+        // Agregar listeners para re-validar cada vez que un campo cambia
+        playerInputs.forEach(input => {
+            input.addEventListener('input', checkFormValidity);
+            input.addEventListener('change', checkFormValidity);
+        });
+
+        // Llamar una vez al inicio para establecer el estado
+        checkFormValidity();
+        
+        // --- Funciones de menú (si no están en landing.js) ---
+        function logout() {
+            window.location.href = '/logout';
+        }
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
+</body>
+</html>

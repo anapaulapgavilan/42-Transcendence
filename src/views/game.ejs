@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="<%= typeof language !== 'undefined' ? language : 'es' %>" class="h-full">
+<head>
+    <meta charset="UTF-8" />
+    <title><%= typeof t !== 'undefined' ? t('profile.game') : 'Game' %> - <%= typeof t !== 'undefined' ? t('common.gameTitle') : 'ft_transcendence' %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- FAVICON -->
+    <link rel="icon" type="image/svg+xml" href="./public/favicon.svg">
+    
+    <!-- CSS compilado por Tailwind -->
+    <link href="/public/styles.css" rel="stylesheet" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-full font-poppins game-page">
+    <!-- Fondo con gradiente y mesh -->
+    <div class="absolute inset-0 z-0 min-h-screen">
+        <!-- Gradiente base -->
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"></div>
+        
+        <!-- Gradiente vibrante -->
+        <div class="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-pink-500/30 to-blue-600/20 bg-mesh opacity-80"></div>
+        
+        <!-- Overlay oscuro para mejor contraste -->
+        <div class="absolute inset-0 bg-black/20"></div>
+        
+        <!-- Partículas flotantes -->
+        <div class="absolute inset-0">
+            <div class="floating-particle particle-1"></div>
+            <div class="floating-particle particle-2"></div>
+            <div class="floating-particle particle-3"></div>
+            <div class="floating-particle particle-4"></div>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="relative z-10 min-h-screen flex flex-col">
+        <!-- Header/Navbar -->
+        <header class="p-6 glass-effect">
+            <nav class="flex justify-between items-center max-w-7xl mx-auto">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">42</span>
+                    </div>
+                    <span class="text-white font-semibold text-lg">ft_transcendence</span>
+                </div>
+
+                <!-- Navegación Principal -->
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="/home" class="nav-menu-item">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                        <span><%= typeof t !== 'undefined' ? t('profile.home') : 'Home' %></span>
+                    </a>
+                    
+                    <a href="/profile" class="nav-menu-item">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        <span><%= typeof t !== 'undefined' ? t('profile.profile') : 'Perfil' %></span>
+                    </a>
+                    
+                    <a href="/game" class="nav-menu-item active">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.01M15 10h1.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span><%= typeof t !== 'undefined' ? t('profile.game') : 'Game' %></span>
+                    </a>
+                    
+                    <a href="/tournament" class="nav-menu-item">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                        </svg>
+                        <span><%= typeof t !== 'undefined' ? t('profile.tournaments') : 'Torneos' %></span>
+                    </a>
+                </div>
+
+                <!-- Usuario y Logout -->
+                <div class="flex items-center space-x-4">
+                    <!-- Language Switcher -->
+                    <div class="hidden sm:block">
+                        <%- include('components/languageSwitcher') %>
+                    </div>
+                    
+                    <!-- Info del usuario -->
+                    <div class="hidden sm:flex items-center space-x-3">
+                        <div class="text-right">
+                            <p class="text-white text-sm font-medium"><%= user.alias %></p>
+                            <p class="text-white/60 text-xs"><%= typeof t !== 'undefined' ? t('profile.level') : 'Nivel' %> <%= (Math.floor((user.wins + user.looses) / 5) + 1) %></p>
+                            
+                        </div>
+                        <div class="w-10 h-10 bg-gradient-to-r from-orange-500 to-pink-500 rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">
+                                <%= user.alias.charAt(0).toUpperCase() %>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Botón Logout -->
+                    <button onclick="logout()" class="logout-btn">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Menú Móvil -->
+                <div class="md:hidden">
+                    <button class="text-white mobile-menu-btn" type="button" aria-label="Toggle menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Menú móvil desplegable -->
+            <div id="mobileMenu" class="md:hidden hidden mt-4 pt-4 border-t border-white/10">
+                <div class="flex flex-col space-y-2">
+                    <a href="/home" class="mobile-nav-item"><%= typeof t !== 'undefined' ? t('profile.home') : 'Home' %></a>
+                    <a href="/profile" class="mobile-nav-item"><%= typeof t !== 'undefined' ? t('profile.profile') : 'Perfil' %></a>
+                    <a href="/game" class="mobile-nav-item active"><%= typeof t !== 'undefined' ? t('profile.game') : 'Game' %></a>
+                    <a href="/tournament" class="mobile-nav-item"><%= typeof t !== 'undefined' ? t('profile.tournaments') : 'Torneos' %></a>
+                    <div class="pt-3 border-t border-white/10">
+                        <%- include('components/languageSwitcher') %>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Contenido principal -->
+        <main class="flex-1 flex items-center justify-center px-6 py-12">
+            <div class="w-full max-w-2xl mx-auto">
+                <!-- Container principal con glass effect -->
+                <div class="game-container glass-container">
+                    <!-- Header de la página -->
+                    <div class="text-center mb-12">
+                        <div class="game-badge mb-6">
+                            <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.01M15 10h1.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <%= typeof t !== 'undefined' ? t('game.newGame') : 'Nueva Partida' %>
+                        </div>
+                        
+                        <h1 class="game-title">
+                            <span class="block text-gradient font-orbitron tracking-tight">
+                                <%= typeof t !== 'undefined' ? t('game.timeToPlay') : '¡HORA DE JUGAR' %>
+                            </span>
+                            <span class="block text-gradient font-orbitron tracking-tight text-orange-400">
+                                <%= user.alias.toUpperCase() %>!
+                            </span>
+                        </h1>
+                        
+                        <p class="game-subtitle">
+                            <%= typeof t !== 'undefined' ? t('game.configureGame') : 'Configura tu partida y prepárate para la batalla' %>
+                        </p>
+                    </div>
+
+                    <!-- Formulario de creación de partida -->
+                    <form action="/game" method="POST" class="game-form">
+                        <!-- Configuración de IA -->
+                        <div class="game-option-card">
+                            <div class="option-header">
+                                <div class="option-icon bg-gradient-to-r from-purple-500 to-violet-600">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="option-title"><%= typeof t !== 'undefined' ? t('game.opponentConfig') : 'Configuración de Oponente' %></h3>
+                                    <p class="option-desc"><%= typeof t !== 'undefined' ? t('game.chooseOpponent') : 'Elige contra quién quieres jugar' %></p>
+                                </div>
+                            </div>
+                            
+                            <div class="option-control">
+                                <label class="ai-toggle">
+                                    <input type="checkbox" name="IA" value="true" class="ai-checkbox">
+                                    <div class="ai-toggle-slider">
+                                        <div class="ai-toggle-button"></div>
+                                    </div>
+                                    <span class="ai-toggle-label"><%= typeof t !== 'undefined' ? t('game.enableAI') : 'Activar IA' %></span>
+                                </label>
+                                <p class="ai-hint"><%= typeof t !== 'undefined' ? t('game.aiHint') : 'Cuando esté activado, jugarás contra la inteligencia artificial' %></p>
+                            </div>
+                        </div>
+
+                        <!-- Configuración de nombre de oponente -->
+                        <div class="game-option-card" id="nameSection">
+                            <div class="option-header">
+                                <div class="option-icon bg-gradient-to-r from-blue-500 to-cyan-600">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="option-title"><%= typeof t !== 'undefined' ? t('game.opponentName') : 'Nombre del Oponente' %></h3>
+                                    <p class="option-desc"><%= typeof t !== 'undefined' ? t('game.enterOpponentName') : 'Introduce el nombre del jugador rival' %></p>
+                                </div>
+                            </div>
+                            
+                            <div class="option-control">
+                                <div class="form-group">
+                                    <input 
+                                        type="text" 
+                                        id="name" 
+                                        name="name" 
+                                        placeholder="<%= typeof t !== 'undefined' ? t('game.usernamePlaceholder') : 'Introduce un nombre de usuario' %>"
+                                        class="form-input game-name-input"
+                                        required
+                                    >
+                                    <p class="input-hint"><%= typeof t !== 'undefined' ? t('game.nameHint') : 'Este será el nombre que aparezca durante la partida' %></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Difficulty Selection -->
+                        <div class="game-option-card" id="difficultySection" style="display: none;">
+                            <div class="option-header">
+                                <div class="option-icon bg-gradient-to-r from-red-500 to-orange-600">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="option-title"><%= typeof t !== 'undefined' ? t('game.difficulty') : 'Dificultad de la IA' %></h3>
+                                    <p class="option-desc"><%= typeof t !== 'undefined' ? t('game.chooseDifficulty') : 'Elige el nivel de la IA' %></p>
+                                </div>
+                            </div>
+                            <div class="option-control">
+                                <select name="difficulty" class="form-input">
+                                    <option value="easy"><%= typeof t !== 'undefined' ? t('game.easy') : 'Fácil' %></option>
+                                    <option value="medium" selected><%= typeof t !== 'undefined' ? t('game.medium') : 'Medio' %></option>
+                                    <option value="hard"><%= typeof t !== 'undefined' ? t('game.hard') : 'Difícil' %></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Botón de crear partida -->
+                        <div class="game-actions">
+                            <button type="submit" class=" game-create-btn">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                                <%= typeof t !== 'undefined' ? t('game.createGame') : 'Crear Partida' %>
+                            </button>
+                            
+                            <a href="/home" class="btn-secondary game-cancel-btn">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                                </svg>
+                                <%= typeof t !== 'undefined' ? t('game.backToHome') : 'Volver al Home' %>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript para efectos interactivos -->
+    <script src="/public/js/landing.js"></script>
+    <script>
+       document.addEventListener('DOMContentLoaded', function () {
+            const aiCheckbox = document.querySelector('input[name="IA"]');
+            const nameSection = document.getElementById('nameSection');
+            const difficultySection = document.getElementById('difficultySection');
+            const nameInput = document.getElementById('name');
+
+            function toggleSections() {
+                if (aiCheckbox.checked) {
+                    nameSection.style.display = 'none';
+                    nameInput.required = false;
+                    difficultySection.style.display = 'block';
+                } else {
+                    nameSection.style.display = 'block';
+                    nameInput.required = true;
+                    difficultySection.style.display = 'none';
+                }
+            }
+
+            aiCheckbox.addEventListener('change', toggleSections);
+
+            // Initial state
+            toggleSections();
+        });
+    </script>
+</body>
+</html>

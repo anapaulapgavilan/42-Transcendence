@@ -1,0 +1,129 @@
+<!-- Language Switcher Component -->
+<%
+const availableLanguages = [
+    { code: 'es', name: 'Español', flag: '🇪🇸' },
+    { code: 'en', name: 'English', flag: '🇺🇸' },
+    { code: 'fr', name: 'Français', flag: '🇫🇷' },
+    { code: 'ro', name: 'Română', flag: '🇲🇩' }
+];
+
+const currentLang = typeof language !== 'undefined' ? language : 'es';
+const currentLangData = availableLanguages.find(lang => lang.code === currentLang) || availableLanguages[0];
+%>
+
+<div class="language-switcher-container">
+    <div>
+        <button type="button" class="language-switcher-btn" onclick="toggleLanguageMenu()" aria-expanded="false" aria-haspopup="true">
+            <span class="flex items-center">
+                <span class="text-lg mr-2"><%= currentLangData.flag %></span>
+                <span class="text-sm font-medium text-white"><%= currentLangData.name %></span>
+                <svg class="ml-2 -mr-1 h-4 w-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </span>
+        </button>
+    </div>
+
+    <!-- Menú desplegable posicionado absolutamente en el body -->
+    <div id="languageMenu" class="language-menu hidden">
+        <div class="py-1 flex flex-col" role="menu" aria-orientation="vertical">
+            <% availableLanguages.forEach(lang => { %>
+                <a href="/change-language?lng=<%= lang.code %>" class="language-menu-item <%= currentLang === lang.code ? 'active' : '' %>" role="menuitem">
+                    <div class="flex items-center justify-between w-full">
+                        <div class="flex items-center">
+                            <span class="text-lg mr-3"><%= lang.flag %></span>
+                            <span class="text-sm font-medium"><%= lang.name %></span>
+                        </div>
+                        <% if (currentLang === lang.code) { %>
+                            <svg class="h-4 w-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                        <% } %>
+                    </div>
+                </a>
+            <% }); %>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleLanguageMenu() {
+    const menu = document.getElementById('languageMenu');
+    const button = document.querySelector('.language-switcher-btn');
+    
+    if (menu.classList.contains('hidden')) {
+        // Calcular posición del botón
+        const buttonRect = button.getBoundingClientRect();
+        
+        // Crear un portal para el menú fuera del contexto del header
+        const body = document.body;
+        const menuClone = menu.cloneNode(true);
+        menuClone.id = 'languageMenuPortal';
+        menuClone.classList.remove('hidden');
+        
+        // Posicionar el menú en el portal
+        menuClone.style.position = 'fixed';
+        menuClone.style.top = (buttonRect.bottom + 8) + 'px';
+        menuClone.style.right = (window.innerWidth - buttonRect.right) + 'px';
+        menuClone.style.zIndex = '9999999';
+        menuClone.style.width = '13rem';
+        menuClone.style.pointerEvents = 'auto';
+        
+        // Agregar el menú al body
+        body.appendChild(menuClone);
+        
+        // Ocultar el menú original
+        menu.classList.add('hidden');
+        
+        // Agregar evento de click para cerrar
+        menuClone.addEventListener('click', function(e) {
+            if (e.target.closest('.language-menu-item')) {
+                body.removeChild(menuClone);
+            }
+        });
+        
+    } else {
+        // Cerrar el menú
+        const portalMenu = document.getElementById('languageMenuPortal');
+        if (portalMenu) {
+            document.body.removeChild(portalMenu);
+        }
+        menu.classList.add('hidden');
+    }
+}
+
+// Close menu when clicking outside
+document.addEventListener('click', function(event) {
+    const menu = document.getElementById('languageMenu');
+    const portalMenu = document.getElementById('languageMenuPortal');
+    const button = event.target.closest('.language-switcher-btn');
+    
+    if (!button && !menu.contains(event.target) && !portalMenu?.contains(event.target)) {
+        if (portalMenu) {
+            document.body.removeChild(portalMenu);
+        }
+        menu.classList.add('hidden');
+    }
+});
+
+// Cerrar menú al hacer scroll
+window.addEventListener('scroll', function() {
+    const portalMenu = document.getElementById('languageMenuPortal');
+    if (portalMenu) {
+        document.body.removeChild(portalMenu);
+    }
+    const menu = document.getElementById('languageMenu');
+    if (!menu.classList.contains('hidden')) {
+        menu.classList.add('hidden');
+    }
+});
+
+// Reposicionar menú al redimensionar ventana
+window.addEventListener('resize', function() {
+    const portalMenu = document.getElementById('languageMenuPortal');
+    if (portalMenu) {
+        document.body.removeChild(portalMenu);
+        toggleLanguageMenu();
+    }
+});
+</script>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="<%= typeof language !== 'undefined' ? language : 'es' %>" class="h-full">
+<head>
+    <meta charset="UTF-8" />
+    <title>Sign Up - ft_transcendence</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- Google Sign-In -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- FAVICON -->
+    <link rel="icon" type="image/svg+xml" href="./public/favicon.svg">
+    
+    <!-- CSS compilado por Tailwind -->
+    <link href="/public/styles.css" rel="stylesheet" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="h-full overflow-hidden font-poppins">
+    <!-- Fondo con gradiente y mesh (mismo que index y login) -->
+    <div class="fixed inset-0 z-0">
+        <!-- Gradiente base -->
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"></div>
+        
+        <!-- Gradiente vibrante -->
+        <div class="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-pink-500/30 to-blue-600/20 bg-mesh opacity-80"></div>
+        
+        <!-- Overlay oscuro para mejor contraste -->
+        <div class="absolute inset-0 bg-black/20"></div>
+        
+        <!-- Partículas flotantes -->
+        <div class="absolute inset-0">
+            <div class="floating-particle particle-1"></div>
+            <div class="floating-particle particle-2"></div>
+            <div class="floating-particle particle-3"></div>
+            <div class="floating-particle particle-4"></div>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="relative z-10 h-full flex flex-col justify-center">
+        <!-- Language Switcher -->
+        <div class="absolute top-6 right-6">
+            <%- include('components/languageSwitcher') %>
+        </div>
+        
+        <!-- Contenido principal centrado -->
+        <main class="flex-1 flex items-center justify-center px-6 py-12">
+            <div class="w-full max-w-md">
+                <!-- Container con efecto glass -->
+                <div class="signup-container glass-effect">
+                    <!-- Header del signup -->
+                    <div class="text-center mb-8">
+                        <h1 class="text-3xl font-bold text-gradient font-orbitron mb-2">
+                            <%= typeof t !== 'undefined' ? t('signup.joinArena') : 'Únete a la Arena' %>
+                        </h1>
+                        <p class="text-white/70 text-sm">
+                            <%= typeof t !== 'undefined' ? t('signup.startAdventure') : 'Crea tu cuenta y comienza la aventura' %>
+                        </p>
+                    </div>
+
+                    <!-- Formulario de signup local -->
+                    <form method="POST" action="/signup" class="space-y-6" id="localSignupForm">
+                        <input type="hidden" name="auth_provider" value="local" />
+                        
+                        <!-- Campo Username -->
+                        <div class="form-group">
+                            <label for="username" class="form-label">
+                                <%= typeof t !== 'undefined' ? t('signup.username') : 'Username' %>
+                            </label>
+                            <input 
+                                type="text" 
+                                name="username" 
+                                id="username"
+                                required 
+                                class="form-input"
+                                placeholder="<%= typeof t !== 'undefined' ? t('signup.usernamePlaceholder') : 'Tu nombre de usuario' %>"
+                            />
+                        </div>
+
+                        <!-- Campo Email -->
+                        <div class="form-group">
+                            <label for="email" class="form-label">
+                                <%= typeof t !== 'undefined' ? t('signup.email') : 'Email' %>
+                            </label>
+                            <input 
+                                type="email" 
+                                name="email" 
+                                id="email"
+                                required 
+                                class="form-input"
+                                placeholder="<%= typeof t !== 'undefined' ? t('signup.emailPlaceholder') : 'tu@email.com' %>"
+                            />
+                        </div>
+
+                        <!-- Campo Password -->
+                        <div class="form-group">
+                            <label for="password" class="form-label">
+                                <%= typeof t !== 'undefined' ? t('signup.password') : 'Password' %>
+                            </label>
+                            <input 
+                                type="password" 
+                                name="password" 
+                                id="password"
+                                required 
+                                class="form-input"
+                                placeholder="<%= typeof t !== 'undefined' ? t('signup.passwordPlaceholder') : '••••••••' %>"
+                            />
+                        </div>
+
+                        <!-- Botón Sign Up -->
+                        <button type="submit" class="btn-primary w-full group">
+                            <span class="relative z-10"><%= typeof t !== 'undefined' ? t('signup.createAccount') : 'Crear Cuenta' %></span>
+                        </button>
+                    </form>
+
+                    <!-- Separador -->
+                    <div class="separator">
+                        <div class="separator-line"></div>
+                        <span class="separator-text"><%= typeof t !== 'undefined' ? t('signup.orContinueWith') : 'o continúa con' %></span>
+                        <div class="separator-line"></div>
+                    </div>
+
+                    <!-- Google Sign-In -->
+                    <div class="google-signin-container">
+                        <div
+                            id="g_id_onload"
+                            data-client_id="<%= googleClientId %>"
+                            data-context="signup"
+                            data-callback="handleCredentialResponse"
+                            data-auto_prompt="false"
+                        ></div>
+                        <div
+                            class="g_id_signin google-btn-wrapper"
+                            data-type="standard"
+                            data-size="large"
+                            data-theme="filled_blue"
+                            data-text="signup_with"
+                            data-shape="rectangular"
+                            data-logo_alignment="left"
+                            data-width="100%"
+                        ></div>
+                    </div>
+
+                    <!-- Links adicionales -->
+                    <div class="text-center mt-6 space-y-2">
+                        <p class="text-white/60 text-sm">
+                            <%= typeof t !== 'undefined' ? t('signup.haveAccount') : '¿Ya tienes cuenta?' %> 
+                            <a href="/login" class="text-orange-400 hover:text-orange-300 transition-colors font-medium">
+                                <%= typeof t !== 'undefined' ? t('signup.loginHere') : 'Inicia sesión aquí' %>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript para Google Signup (conservado tal como estaba) -->
+    <script>
+        function handleCredentialResponse(response) {
+            // response.credential contains the Google ID token (JWT)
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/signup';
+            const inputToken = document.createElement('input');
+            inputToken.type = 'hidden';
+            inputToken.name = 'id_token';
+            inputToken.value = response.credential;
+            form.appendChild(inputToken);
+            const inputAuth = document.createElement('input');
+            inputAuth.type = 'hidden';
+            inputAuth.name = 'auth_provider';
+            inputAuth.value = 'google';
+            form.appendChild(inputAuth);
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+
+    <!-- JavaScript para efectos interactivos -->
+    <script src="/public/js/landing.js"></script>
+</body>
+</html>

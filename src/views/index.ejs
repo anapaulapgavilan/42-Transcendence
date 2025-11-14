@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="<%= typeof language !== 'undefined' ? language : 'es' %>" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title : t('common.gameTitle') %></title>
+
+    <!-- FAVICON -->
+    <link rel="icon" type="image/svg+xml" href="./public/favicon.svg">
+
+    <!-- CSS compilado por Tailwind -->
+   <link href="/public/styles.css" rel="stylesheet" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="h-full overflow-hidden font-poppins">
+    <!-- Fondo con gradiente y mesh -->
+    <div class="fixed inset-0 z-0">
+        <!-- Gradiente base -->
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"></div>
+
+        <!-- Gradiente vibrante -->
+        <div class="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-pink-500/30 to-blue-600/20 bg-mesh opacity-80"></div>
+
+        <!-- Overlay oscuro para mejor contraste -->
+        <div class="absolute inset-0 bg-black/20"></div>
+
+        <!-- Partículas flotantes -->
+        <div class="absolute inset-0">
+            <div class="floating-particle particle-1"></div>
+            <div class="floating-particle particle-2"></div>
+            <div class="floating-particle particle-3"></div>
+            <div class="floating-particle particle-4"></div>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="relative z-10 h-full flex flex-col">
+        <!-- Header/Navbar -->
+
+
+        <!-- Contenido principal centrado -->
+        <main class="flex-1 flex items-center justify-center px-6">
+            <div class="text-center max-w-4xl mx-auto">
+                <!-- Language Switcher -->
+                <div class="absolute top-6 right-6">
+                    <%- include('components/languageSwitcher') %>
+                </div>
+
+                <!-- Subtítulo -->
+                <div class="mb-6">
+                    <span class="game-badge">
+                        <%= t('common.gameTitle') %>
+                    </span>
+                </div>
+
+                <!-- Título principal -->
+                <h1 class="main-title">
+                    <span class="block text-gradient font-orbitron tracking-tight">
+                        <%= t('landing.title') %>
+                    </span>
+                </h1>
+
+                <!-- Botones de acción -->
+                <div class="action-buttons">
+                    <!-- Botón Sign Up -->
+                    <a href="/signup"> <button id="signupBtn" class="btn-primary group">
+                        <span class="relative z-10"><%= t('landing.signup') %></span> 
+                    </button> </a>
+
+                    <!-- Botón Login -->
+                     <a href="/login"> <button id="loginBtn" class="btn-secondary group">
+                        <span class="relative z-10"><%= t('landing.login') %></span> 
+                    </button></a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="/public/js/landing.js"></script>
+</body>
+</html>

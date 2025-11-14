@@ -1,0 +1,26 @@
+# ------------------------------------
+# Usa una imagen base de Node.js
+# ------------------------------------
+FROM node:20-alpine
+WORKDIR /app
+RUN mkdir -p db
+
+# Copia los archivos de configuración y dependencias
+COPY package.json package-lock.json ./
+
+# Instala las dependencias. Usamos --omit=dev para un entorno de producción, 
+# pero Tailwind está en devDependencies, así que lo instalamos todo para el build.
+RUN npm install
+
+# Copia todo el código fuente del proyecto
+COPY . .
+
+# Genera el CSS estático (esto coloca el resultado en 'public/styles.css')
+# Esto debe ejecutarse antes de iniciar el servidor final.
+RUN npm run build
+
+# Expone el puerto por defecto de Fastify
+EXPOSE 10000
+
+# Comando para iniciar el servidor Fastify
+CMD ["sh", "-c", "node scripts/migrate.js && node src/app.js"]

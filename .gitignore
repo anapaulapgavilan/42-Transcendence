@@ -1,0 +1,42 @@
+# Node modules (npm/yarn installs)
+node_modules/
+
+# SQLite database files
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.*
+
+# Build outputs (por si usas algo como vite o tailwind build)
+dist/
+build/
+public/build/
+.out/
+
+# Tailwind JIT cache
+.tailwind/
+
+# Editor/IDE files
+.vscode/
+.idea/
+*.swp
+
+# Database
+db/
+
+# macOS
+.DS_Store
+
+#Yo
+TODO

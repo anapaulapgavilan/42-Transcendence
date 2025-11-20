@@ -52,7 +52,7 @@ function handleMouseMove(e) {
 function addRippleEffect() {
     document.querySelectorAll('button').forEach(button => {
         button.addEventListener('click', function(e) {
-            if (e.target.closest('.logout-btn')) { // Do not show ripple on logout
+            if (e.target.closest('.logout-btn') || this.classList.contains('no-ripple')) { // Do not show ripple on logout or no-ripple buttons
                 return;
             }
             let ripple = document.createElement('span');

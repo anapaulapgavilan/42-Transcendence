@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="<%= typeof language !== 'undefined' ? language : 'es' %>">
 <head>
     <meta charset="UTF-8">
     <title>Partida en curso</title>
@@ -34,7 +34,8 @@
         isPlayer1AI: <%= typeof isPlayer1AI !== 'undefined' ? isPlayer1AI : 'false' %>,
         isPlayer2AI: <%= typeof isPlayer2AI !== 'undefined' ? isPlayer2AI : 'false' %>,
         match_id: "<%= typeof match_id !== 'undefined' && match_id !== null ? match_id : '' %>",
-        difficulty: "<%= typeof difficulty !== 'undefined' ? difficulty : 'medium' %>"
+        difficulty: "<%= typeof difficulty !== 'undefined' ? difficulty : 'medium' %>",
+        backToHomeText: "<%= typeof t !== 'undefined' ? t('game.backToHome') : 'Volver a Home' %>"
     };
 </script>
 

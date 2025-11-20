@@ -14,7 +14,8 @@ const {
     isPlayer1AI,
     isPlayer2AI,
     match_id,
-    difficulty
+    difficulty,
+    backToHomeText
 } = window.GAME_DATA;
 
 // Create the canvas and the context
@@ -35,8 +36,8 @@ const PLAYER_FAST_SPEED = 6;
 const DIFFICULTY_PRESETS = {
   easy: {
     label: "Easy",
-    fastSpeed: 3.2,
-    slowSpeed: 1.6,
+    fastSpeed: 6,
+    slowSpeed: 6,
     jitter: 1.2,
     deadzone: 4.2,
     slowPadding: 14,
@@ -47,7 +48,7 @@ const DIFFICULTY_PRESETS = {
   medium: {
     label: "Medium",
     fastSpeed: 6,
-    slowSpeed: 3,
+    slowSpeed: 6,
     jitter: 0.35,
     deadzone: 1.5,
     slowPadding: 6,
@@ -57,8 +58,8 @@ const DIFFICULTY_PRESETS = {
   },
   hard: {
     label: "Hard",
-    fastSpeed: 9,
-    slowSpeed: 5.2,
+    fastSpeed: 6,
+    slowSpeed: 6,
     jitter: 0.12,
     deadzone: 0.45,
     slowPadding: 2,
@@ -77,8 +78,8 @@ const BASE_PREDICTION_ITERATIONS = Math.max(
 
 let currentDifficultyKey = difficulty || 'medium';
 let currentDifficulty = { ...DIFFICULTY_PRESETS[currentDifficultyKey] };
-let aiFastSpeed = currentDifficulty.fastSpeed;
-let aiSlowSpeed = currentDifficulty.slowSpeed;
+let aiFastSpeed = 6;
+let aiSlowSpeed = 6;
 
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
@@ -175,8 +176,8 @@ function setDifficulty(key, options = {}) {
   if (!DIFFICULTY_PRESETS[key]) return;
   currentDifficultyKey = key;
   currentDifficulty = { ...DIFFICULTY_PRESETS[key] };
-  aiFastSpeed = currentDifficulty.fastSpeed;
-  aiSlowSpeed = currentDifficulty.slowSpeed;
+  aiFastSpeed = 6;
+  aiSlowSpeed = 6;
   aiAdaptive = createAdaptiveState(currentDifficulty);
   if (!options.silent) {
     releaseAIControl();
@@ -689,7 +690,7 @@ function update() {
           // Create and show the button
           const homeButton = document.createElement('a');
           homeButton.href = '/home';
-          homeButton.textContent = 'Return to home';
+          homeButton.textContent = backToHomeText;
           homeButton.className = 'btn btn-primary';
           document.body.appendChild(homeButton);
       }
@@ -697,27 +698,92 @@ function update() {
 }
 
 function render() {
-    ctx.fillStyle = "#111";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
+    // Fondo con gradiente sutil
+    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    gradient.addColorStop(0, "#0a0e1a");
+    gradient.addColorStop(0.5, "#151b2d");
+    gradient.addColorStop(1, "#0a0e1a");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // paddles and ball
-    ctx.fillStyle = "#fff";
-    ctx.fillRect(leftPaddle.x, leftPaddle.y, PADDLE_WIDTH, PADDLE_HEIGHT);
-    ctx.fillRect(rightPaddle.x, rightPaddle.y, PADDLE_WIDTH, PADDLE_HEIGHT);
+    // Línea central punteada
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
+    ctx.lineWidth = 2;
+    ctx.setLineDash([10, 10]);
     ctx.beginPath();
-    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
+    ctx.moveTo(canvas.width / 2, 0);
+    ctx.lineTo(canvas.width / 2, canvas.height);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Paddle izquierda (color cyan/azul)
+    const leftGradient = ctx.createLinearGradient(
+        leftPaddle.x, leftPaddle.y,
+        leftPaddle.x, leftPaddle.y + PADDLE_HEIGHT
+    );
+    leftGradient.addColorStop(0, "#00d4ff");
+    leftGradient.addColorStop(0.5, "#00a8cc");
+    leftGradient.addColorStop(1, "#00d4ff");
+    ctx.fillStyle = leftGradient;
+    ctx.fillRect(leftPaddle.x, leftPaddle.y, PADDLE_WIDTH, PADDLE_HEIGHT);
+    
+    // Borde de la paddle izquierda
+    ctx.strokeStyle = "#00ffff";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(leftPaddle.x, leftPaddle.y, PADDLE_WIDTH, PADDLE_HEIGHT);
+
+    // Paddle derecha (color magenta/rosa)
+    const rightGradient = ctx.createLinearGradient(
+        rightPaddle.x, rightPaddle.y,
+        rightPaddle.x, rightPaddle.y + PADDLE_HEIGHT
+    );
+    rightGradient.addColorStop(0, "#ff00ff");
+    rightGradient.addColorStop(0.5, "#cc00aa");
+    rightGradient.addColorStop(1, "#ff00ff");
+    ctx.fillStyle = rightGradient;
+    ctx.fillRect(rightPaddle.x, rightPaddle.y, PADDLE_WIDTH, PADDLE_HEIGHT);
+    
+    // Borde de la paddle derecha
+    ctx.strokeStyle = "#ff66ff";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(rightPaddle.x, rightPaddle.y, PADDLE_WIDTH, PADDLE_HEIGHT);
+
+    // Bola con gradiente radial
+    const ballGradient = ctx.createRadialGradient(
+        ball.x, ball.y, 0,
+        ball.x, ball.y, ball.radius
+    );
+    ballGradient.addColorStop(0, "#ffffff");
+    ballGradient.addColorStop(0.7, "#f0f0f0");
+    ballGradient.addColorStop(1, "#cccccc");
+    ctx.fillStyle = ballGradient;
+    ctx.beginPath();
+    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
     ctx.fill();
 
-    // points
-    ctx.font = "30px Arial";
-    ctx.fillText(`${userName}: ${score.left}`, canvas.width/4, 40);
-    ctx.fillText(`${opponentName}: ${score.right}`, (canvas.width*3)/4, 40);
+    // Borde de la bola
+    ctx.strokeStyle = "#ffffff";
+    ctx.lineWidth = 1;
+    ctx.stroke();
 
-    if(gameOver){
-        ctx.fillStyle = "#0f0";
-        const winner = score.left > score.right ? userName : opponentName;
-        ctx.fillText(`${winner} Wins!`, canvas.width/2 - 100, canvas.height/2);
-    }
+    // Scores con mejor tipografía
+    ctx.font = "bold 32px 'Arial', sans-serif";
+    ctx.textAlign = "center";
+    
+    // Score izquierdo (color cyan)
+    ctx.fillStyle = "#00d4ff";
+    ctx.fillText(`${userName}`, canvas.width / 4, 35);
+    ctx.font = "bold 40px 'Arial', sans-serif";
+    ctx.fillText(`${score.left}`, canvas.width / 4, 75);
+    
+    // Score derecho (color magenta)
+    ctx.fillStyle = "#ff00ff";
+    ctx.font = "bold 32px 'Arial', sans-serif";
+    ctx.fillText(`${opponentName}`, (canvas.width * 3) / 4, 35);
+    ctx.font = "bold 40px 'Arial', sans-serif";
+    ctx.fillText(`${score.right}`, (canvas.width * 3) / 4, 75);
+
+
 }
 
 function gameLoop() {

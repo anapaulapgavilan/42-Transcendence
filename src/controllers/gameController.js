@@ -222,6 +222,17 @@ export function gamePlayPage(request, reply) {
         };
     }
 
+    // Get user's preferred language from database
+    const currentUser = db.prepare('SELECT preferred_language FROM user WHERE id = ?').get(userId);
+    const userPreferredLanguage = currentUser?.preferred_language || 'es';
+
+    // Get language and translation function
+    const { language, t } = getLanguageAndTranslation(request, userPreferredLanguage);
+
+    // Add language and translation to gameData
+    gameData.language = language;
+    gameData.t = t;
+
     return reply.view("gamePlay", gameData);
 }
 

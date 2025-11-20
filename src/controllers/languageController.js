@@ -22,6 +22,17 @@ export async function changeLanguage(request, reply) {
         path: '/'
     });
     
+    // Update user's preferred language in database if user is authenticated
+    if (request.user && request.user.userId) {
+        try {
+            const db = request.server.db;
+            db.prepare('UPDATE user SET preferred_language = ? WHERE id = ?').run(lng, request.user.userId);
+        } catch (error) {
+            console.error('Error updating user language preference:', error);
+            // Continue even if database update fails
+        }
+    }
+    
     // Redirect back to the referring page or home
     const referer = request.headers.referer || '/';
     return reply.redirect(referer);

@@ -1,30 +1,40 @@
 ﻿# Transcendence
 
-Full-stack web project with game features, auth flows, and deployment.
+Aplicacion web full-stack con autenticacion, juego y despliegue en contenedor.
 
 ## Stack
 
 - School: 42
-- Primary language: C/C++
-- Scope: single repository per project
+- Lenguaje principal: JavaScript/TypeScript + Fastify + Docker
+- Alcance: un repositorio por proyecto
 
-## How To Run
+## Como Ejecutarlo
+
+Opcion Docker (recomendada):
 
 ~~~bash
 docker compose up --build -d
 ~~~
 
-Then open https://localhost:10000
+Abrir: https://localhost:10000
 
-## Testing
+Opcion local (sin Docker):
 
-No dedicated test script detected in the repository root.
+~~~bash
+npm install
+npm run build
+npm run dev
+~~~
 
-## Notes
+## Pruebas
 
-- This repository is maintained as part of a 42 portfolio.
-- Build commands are intentionally simple to keep evaluation reproducible.
+No se detectaron scripts de testing dedicados en la raiz.
 
-## Author
+## Notas
+
+- Este repositorio forma parte del portfolio de 42.
+- Los comandos estan orientados a ejecucion local para revision y evaluacion.
+
+## Autora
 
 anapaulapgavilan

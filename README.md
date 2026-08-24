@@ -1,5 +1,7 @@
 ﻿# Transcendence
 
+![42](https://img.shields.io/badge/42-School-000000?style=flat-square&logo=42&logoColor=white) ![Language](https://img.shields.io/badge/lang-JavaScript%2FTypeScript%20%2B%20Fastify%20%2B%20Docker-blue?style=flat-square) ![Status](https://img.shields.io/badge/status-completed-success?style=flat-square)
+
 Aplicacion web full-stack con autenticacion, juego y despliegue en contenedor.
 
 ## Stack
@@ -7,6 +9,13 @@ Aplicacion web full-stack con autenticacion, juego y despliegue en contenedor.
 - School: 42
 - Lenguaje principal: JavaScript/TypeScript + Fastify + Docker
 - Alcance: un repositorio por proyecto
+
+## Features
+
+- Autenticacion de usuarios y gestion de sesiones
+- Juego multiplayer en tiempo real via WebSockets
+- Despliegue completo con Docker Compose y Nginx como reverse proxy
+- Frontend con Tailwind CSS y backend con Fastify
 
 ## Como Ejecutarlo
 

@@ -4,6 +4,18 @@
 
 Full-stack web app with authentication, gameplay, and containerized deployment.
 
+## About This Project
+
+### What It Does
+
+Transcendence is a full-stack web application built around a real-time, browser-playable version of Pong, wrapped with the features a real product needs: account creation and login (including Google sign-in), user profiles with match history and stats, a friends list, and both quick matches (including a play-against-AI mode) and multi-player tournaments.
+
+The backend is a Fastify (Node.js) server that serves the app, exposes the game and account APIs, and drives real-time gameplay over WebSockets, backed by SQLite for persistence. The frontend is server-rendered with EJS and styled with Tailwind CSS. The whole stack runs behind Nginx inside a single Docker Compose service, self-signed TLS certificates included, so it can be deployed with one command.
+
+### Purpose
+
+It evaluates the ability to design and ship a complete web product end-to-end: authentication and session security, real-time bidirectional communication for gameplay, relational data modeling for users/matches/tournaments, and a reproducible containerized deployment, rather than any single isolated technique.
+
 ## Stack
 
 - School: 42
@@ -34,6 +46,8 @@ Full-stack web app with authentication, gameplay, and containerized deployment.
 ![tournament](docs/screenshots/tournament.png)
 
 ## How to Run
+
+Prerequisites (Docker option): Docker and Docker Compose, plus a `.env` file at the project root with `COOKIE_SECRET`, `JWT_SECRET`, and `GOOGLE_CLIENT_ID` (a placeholder value works if Google sign-in is not needed). Prerequisites (local option): Node.js 20+ and npm.
 
 Docker option (recommended):
 

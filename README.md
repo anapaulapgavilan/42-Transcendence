@@ -17,6 +17,16 @@ Aplicacion web full-stack con autenticacion, juego y despliegue en contenedor.
 - Despliegue completo con Docker Compose y Nginx como reverse proxy
 - Frontend con Tailwind CSS y backend con Fastify
 
+## Screenshots
+
+| Landing | Login / Signup | Dashboard |
+|---|---|---|
+| ![Landing](docs/screenshots/landing.png) | ![Login](docs/screenshots/login.png) | ![Dashboard](docs/screenshots/dashboard.png) |
+
+| Gameplay | Perfil | Torneos |
+|---|---|---|
+| ![Gameplay](docs/screenshots/gameplay.png) | ![Perfil](docs/screenshots/profile.png) | ![Torneos](docs/screenshots/tournament.png) |
+
 ## Como Ejecutarlo
 
 Opcion Docker (recomendada):

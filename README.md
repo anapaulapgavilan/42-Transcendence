@@ -33,6 +33,12 @@ It evaluates the ability to design and ship a complete web product end-to-end: a
 - Full deployment with Docker Compose and Nginx as reverse proxy
 - Tailwind CSS frontend with a Fastify backend
 
+## Review Focus
+
+- Look for the full product surface: authentication, profiles, match history, friends, AI mode, and tournaments.
+- Review WebSocket gameplay flow and how server state stays consistent during real-time matches.
+- Notice the deployment story: app, backend, database, TLS, and reverse proxy running as a reproducible stack.
+
 ## Screenshots
 
 ![dashboard](docs/screenshots/dashboard.png)

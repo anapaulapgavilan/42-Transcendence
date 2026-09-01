@@ -22,6 +22,10 @@ It evaluates the ability to design and ship a complete web product end-to-end: a
 - Primary language: JavaScript/TypeScript + Fastify + Docker
 - Scope: one repository per project
 
+## Skills Demonstrated
+
+`Full-stack development` | `Authentication/security` | `Real-time WebSockets` | `Relational data modeling` | `Containerized deployment`
+
 ## Features
 
 - User authentication and session management

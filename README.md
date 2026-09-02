@@ -39,13 +39,13 @@ It evaluates the ability to design and ship a complete web product end-to-end: a
 - Review WebSocket gameplay flow and how server state stays consistent during real-time matches.
 - Notice the deployment story: app, backend, database, TLS, and reverse proxy running as a reproducible stack.
 
-## Product Walkthrough
+## Project Deep Dive
 
 Transcendence is the closest project in this portfolio to a real production application. It is not just a Pong clone: it combines account management, persistent user data, matchmaking-style flows, profile pages, match history, tournament navigation, real-time gameplay, and deployment concerns into one cohesive product.
 
 From a reviewer's point of view, the most interesting part is how many concerns have to work together at once. The frontend has to guide the user through authentication, navigation, profile state, and gameplay screens. The backend has to keep sessions, game state, and persisted data consistent. The deployment layer has to make the whole app reproducible through Docker and Nginx instead of relying on a local-only setup.
 
-## Architecture Notes
+## Implementation Notes
 
 - **Frontend**: server-rendered EJS views styled with Tailwind CSS, organized around product screens such as landing, auth, dashboard, profile, gameplay, and tournament flow.
 - **Backend**: Fastify application exposing account, game, and page routes while coordinating real-time gameplay through WebSockets.

@@ -39,21 +39,49 @@ It evaluates the ability to design and ship a complete web product end-to-end: a
 - Review WebSocket gameplay flow and how server state stays consistent during real-time matches.
 - Notice the deployment story: app, backend, database, TLS, and reverse proxy running as a reproducible stack.
 
+## Product Walkthrough
+
+Transcendence is the closest project in this portfolio to a real production application. It is not just a Pong clone: it combines account management, persistent user data, matchmaking-style flows, profile pages, match history, tournament navigation, real-time gameplay, and deployment concerns into one cohesive product.
+
+From a reviewer's point of view, the most interesting part is how many concerns have to work together at once. The frontend has to guide the user through authentication, navigation, profile state, and gameplay screens. The backend has to keep sessions, game state, and persisted data consistent. The deployment layer has to make the whole app reproducible through Docker and Nginx instead of relying on a local-only setup.
+
+## Architecture Notes
+
+- **Frontend**: server-rendered EJS views styled with Tailwind CSS, organized around product screens such as landing, auth, dashboard, profile, gameplay, and tournament flow.
+- **Backend**: Fastify application exposing account, game, and page routes while coordinating real-time gameplay through WebSockets.
+- **Persistence**: SQLite-backed data for users, matches, and related product state.
+- **Deployment**: Docker Compose, Nginx, and self-signed TLS certificates provide a repeatable local production-style environment.
+- **Real-time layer**: WebSocket communication keeps the game loop interactive in the browser and forces the server to manage shared match state carefully.
+
 ## Screenshots
 
 ![dashboard](docs/screenshots/dashboard.png)
 
+*Main authenticated area where the player can navigate to game and account features.*
+
 ![gameplay](docs/screenshots/gameplay.png)
+
+*Browser-based Pong match, the real-time core of the project.*
 
 ![landing](docs/screenshots/landing.png)
 
+*Entry point for the product, introducing the application before authentication.*
+
 ![login](docs/screenshots/login.png)
+
+*Authentication screen used to start a session.*
 
 ![profile](docs/screenshots/profile.png)
 
+*Profile view with player identity and progress-oriented information.*
+
 ![signup](docs/screenshots/signup.png)
 
+*Registration flow for creating a player account.*
+
 ![tournament](docs/screenshots/tournament.png)
+
+*Tournament flow showing the multiplayer/product layer around the game.*
 
 ## How to Run
 
